@@ -11,7 +11,9 @@ typedef struct {
     Classe perso;
     Arme_spe arme_a_trouver;   
     int aLarme;         
-    int aLeTresor;      
+    int aLeTresor;
+    int ligne;
+    int colone;
 } Personnage;
 
 typedef enum{DRAGON, ORC , NAZGUL , ARAIGNE , PORTAIL , TELEPORTEUR, TRESOR , ARME_SPE}Type_case;
