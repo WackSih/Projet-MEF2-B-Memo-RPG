@@ -1,0 +1,24 @@
+#include "memo_rpg.h"
+
+//création des différentes structures
+
+
+typedef enum { GANDALF, TAURIEL, GOLLUM, GIMLI } Classe;
+typedef enum { BATON, ARC_M, ANNEAU, HACHE } Arme_spe;
+
+typedef struct {
+    char nomJoueur[50]; // taille des tableaux certainement à ajuster plus tard en fonction de ce que saisie le joueur
+    Classe perso;
+    Arme_spe arme_a_trouver;   
+    int aLarme;         
+    int aLeTresor;      
+} Personnage;
+
+typedef enum{DRAGON, ORC , NAZGUL , ARAIGNE , PORTAIL , TELEPORTEUR, TRESOR , ARME_SPE}Type_case;
+typedef enum {ARC , EPE , BDF , LANCE}Arme;
+
+typedef struct {
+    Type_case type;
+    Arme arme_choisie;
+    int estDecouverte;
+}Case;
