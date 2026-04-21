@@ -12,6 +12,7 @@ typedef struct {
     Arme_spe arme_a_trouver;   
     int aLarme;         
     int aLeTresor;
+    Arme arme_actuelle;
     int ligne;
     int colone;
 } Personnage;
