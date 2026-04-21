@@ -79,3 +79,85 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
         }
     } while (deplacement_valide == 0);
 }
+
+void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire laction de la case
+    Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
+    if(case_actuelle == DRAGON){
+        if(x->arme_actuelle == ARC){
+            printf("Le monstre est vaincu\n");
+        }else{
+            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            // RESET ICI
+        }
+    }
+    if(case_actuelle == ORC){
+        if(x->arme_actuelle == EPEE){
+            printf("Le monstre est vaincu\n");
+        }else{
+            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            // RESET ICI
+        }
+    }
+    if(case_actuelle == NAZGUL){
+        if(x->arme_actuelle == BDF){
+            printf("Le monstre est vaincu\n");
+        }else{
+            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            // RESET ICI
+        }
+    }
+    if(case_actuelle == ARAIGNE){
+        if(x->arme_actuelle == LANCE){
+            printf("Le monstre est vaincu\n");
+        }else{
+            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            // RESET ICI
+        }
+    }
+    if(case_actuelle == HACHE){
+        if(x->perso == GIMLI){
+            printf("Vous avez trouvé votre Arme\n");
+            x->aLarme = 1;
+        }else{
+            printf("Ce n'est pas votre trésor\n");
+        }
+    }
+    if(case_actuelle == ANNEAU){
+        if(x->perso == GOLLUM){
+            printf("Vous avez trouvé votre Arme\n");
+            x->aLarme = 1;
+        }else{
+            printf("Ce n'est pas votre trésor\n");
+        }
+    }
+    if(case_actuelle == ARC_M){
+        if(x->perso == TAURIEL){
+            printf("Vous avez trouvé votre Arme\n");
+            x->aLarme = 1;
+        }else{
+            printf("Ce n'est pas votre trésor\n");
+        }
+    }
+    if(case_actuelle == BATON){
+        if(x->perso == GANDALF){
+            printf("Vous avez trouvé votre Arme\n");
+            x->aLarme = 1;
+        }else{
+            printf("Ce n'est pas votre trésor\n");
+        }
+    }
+    if(case_actuelle == TRESOR){
+        printf("Vous avez trouvé le Trésor !\n");
+        x->aLeTresor = 1;
+    }
+    if(case_actuelle == TOTEM){
+        int ligne1,colonne1,colonne2,ligne2;
+        printf("Vous avez decouvert un totem qui vous permet dechanger deux cases\n");
+        printf("Entrez les coordonnes dune case que vous voulez echanger \n");
+        scanf("%d %d",&ligne1,&colonne1);
+        printf("Entrez les coordonnes de la seconde case\n");
+        scanf("%d %d",&ligne2,&colonne2);
+        //COURS DE DEV
+    }
+    
+}
