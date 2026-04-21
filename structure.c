@@ -23,7 +23,7 @@ typedef enum {ARC , EPE , BDF , LANCE}Arme;
 typedef struct {
     Type_case type;
     Arme arme_choisie;
-    int est_decouverte;
+    int est_decouverte; // 0 = caché, 1 = decouverte
     int proprietaire; // -1 si ce n'est pas un trésor perso, {0,1,2,3} selon le joueur dont c'est le trésor
 }Case;
 
