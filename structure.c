@@ -22,5 +22,10 @@ typedef enum {ARC , EPE , BDF , LANCE}Arme;
 typedef struct {
     Type_case type;
     Arme arme_choisie;
-    int estDecouverte;
+    int est_decouverte;
+    int proprietaire; // 0 si ce n'est pas un trésor perso, {1,2,3,4} selon le joueur dont c'est le trésor
 }Case;
+
+typedef struct {
+    Case tableau[TAILLE][TAILLE]
+}Plateau; // Pour faciliter l'implémentation du plateau et épurer le main()
