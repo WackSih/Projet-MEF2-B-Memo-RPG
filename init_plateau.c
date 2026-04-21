@@ -31,9 +31,9 @@ Plateau initialisation(){
     liste[20].type = TRESOR_PERSO; liste[20].proprietaire = 2; // Joueur 3
     liste[21].type = TRESOR_PERSO; liste[21].proprietaire = 3; // Joueur 4
 
-    liste[22].type = PORTAIL;  liste[22].proprietaire = -1;
-    liste[23].type = TOTEM;    liste[23].proprietaire = -1;
-    liste[24].type = TOTEM;    liste[24].proprietaire = -1;
+    liste[22].type = PORTAIL; liste[22].proprietaire = -1;
+    liste[23].type = TOTEM; liste[23].proprietaire = -1;
+    liste[24].type = TOTEM; liste[24].proprietaire = -1;
 
     for(i=0 ; i<(TAILLE*TAILLE) ; i++){
         liste[i].est_decouverte = 0;
