@@ -16,7 +16,7 @@ typedef struct {
     int colone;
 } Personnage;
 
-typedef enum{DRAGON, ORC , NAZGUL , ARAIGNE , PORTAIL , TELEPORTEUR, TRESOR , ARME_SPE}Type_case;
+typedef enum{DRAGON, ORC , NAZGUL , ARAIGNE , PORTAIL , TOTEM , TRESOR , ARME_SPE}Type_case;
 typedef enum {ARC , EPE , BDF , LANCE}Arme;
 
 typedef struct {
