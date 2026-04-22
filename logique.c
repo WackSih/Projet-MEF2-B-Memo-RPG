@@ -185,7 +185,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
         resolution_case(x, tab); 
     }
 
-void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
+void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ //ATTENTION TABLEAU DE JOUEUR ICI
     int fin_de_partie = 0;
     while(fin_de_partie==0){
         for(int i=0;i<nb_joueurs;i++){
