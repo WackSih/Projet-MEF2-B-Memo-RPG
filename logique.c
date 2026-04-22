@@ -80,6 +80,16 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
     } while (deplacement_valide == 0);
 }
 
+void reset_tableau(Personnage* x, Plateau* tab) {
+    for (int i = 0; i < 5; i++) { 
+        for (int j = 0; j < 5; j++) { 
+            tab->tableau[i][j].est_decouverte = 0; 
+        }
+    }
+    // RESET ICI (attente coordonnes depart)
+    printf("Le labyrinthe se referme... Retour a la case depart !\n");
+}
+
 void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire laction de la case
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     if(case_actuelle == DRAGON){
@@ -87,7 +97,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
             printf("Le monstre est vaincu\n");
         }else{
             printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
-            // RESET ICI
+            reset_tableau(x,tab);
         }
     }
     if(case_actuelle == ORC){
@@ -95,7 +105,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
             printf("Le monstre est vaincu\n");
         }else{
             printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
-            // RESET ICI
+            reset_tableau(x,tab);
         }
     }
     if(case_actuelle == NAZGUL){
@@ -103,7 +113,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
             printf("Le monstre est vaincu\n");
         }else{
             printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
-            // RESET ICI
+            reset_tableau(x,tab);
         }
     }
     if(case_actuelle == ARAIGNE){
@@ -111,7 +121,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
             printf("Le monstre est vaincu\n");
         }else{
             printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
-            // RESET ICI
+            reset_tableau(x,tab);
         }
     }
     if(case_actuelle == HACHE){
@@ -175,12 +185,19 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
         resolution_case(x, tab); 
     }
 
-void reset_tableau(Personnage* x, Plateau* tab) {
-    for (int i = 0; i < 5; i++) { 
-        for (int j = 0; j < 5; j++) { 
-            tab->tableau[i][j].est_decouverte = 0; 
+void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
+    int fin_de_partie = 0;
+    while(fin_de_partie==0){
+        for(int i=0;i<nb_joueurs;i++){
+            printf("Cest au joueurs numéro %d de jouer\n",i+1);
+            deplacement(joueur[i],tab);
+            choix_arme(joueur[i],tab);
+            resolution_case(&joueur[i],tab);
+            if(joueur[i]->aLeTresor==1 && joueur[i]->aLarme==1){
+                printf("Le joueur numéro %d a gagné\n",i+1);
+                fin_de_partie=1;
+                break;
+            }
         }
     }
-    // RESET ICI (attente coordonnes depart)
-    printf("\nLe labyrinthe se referme... Retour a la case depart !\n");
 }
