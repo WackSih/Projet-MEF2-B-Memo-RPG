@@ -151,13 +151,36 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
         x->aLeTresor = 1;
     }
     if(case_actuelle == TOTEM){
-        int ligne1,colonne1,colonne2,ligne2;
-        printf("Vous avez decouvert un totem qui vous permet dechanger deux cases\n");
-        printf("Entrez les coordonnes dune case que vous voulez echanger \n");
-        scanf("%d %d",&ligne1,&colonne1);
-        printf("Entrez les coordonnes de la seconde case\n");
-        scanf("%d %d",&ligne2,&colonne2);
-        //COURS DE DEV
+        int colonne, ligne;
+        do{
+            printf("Vous etes tombe sur un Totem\n");
+            printf("Entrez la ligne puis la colonne de la case CACHEE que vous voulez echanger\n");
+            scanf("%d %d", &ligne, &colonne);
+        } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4 || tab->tableau[ligne][colonne].est_decouverte == 1); 
+        Type_case temp = tab->tableau[ligne][colonne].type;
+        tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
+        tab->tableau[x->ligne][x->colonne].type = temp;
     }
-    
+    if(case_actuelle == PORTAIL){
+        int colonne, ligne;
+        do{
+            printf("Vous etes tombe sur un portail de teleportation\n");
+            printf("Choississez la case ou vous voulez vous teleporter\n");
+            scanf("%d %d", &ligne, &colonne);
+        } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4); 
+        x->ligne = ligne;
+        x->colonne = colonne;
+        tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
+        printf("Vous vous etes teleporte en [%d][%d] !\n", ligne, colonne);
+        resolution_case(x, tab); 
+    }
+
+void reset_tableau(Personnage* x, Plateau* tab) {
+    for (int i = 0; i < 5; i++) { 
+        for (int j = 0; j < 5; j++) { 
+            tab->tableau[i][j].est_decouverte = 0; 
+        }
+    }
+    // RESET ICI (attente coordonnes depart)
+    printf("\nLe labyrinthe se referme... Retour a la case depart !\n");
 }
