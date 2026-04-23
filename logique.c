@@ -184,6 +184,7 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
         printf("Vous vous etes teleporte en [%d][%d] !\n", ligne, colonne);
         resolution_case(x, tab); 
     }
+}
 
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ //ATTENTION TABLEAU DE JOUEUR ICI
     int fin_de_partie = 0;
