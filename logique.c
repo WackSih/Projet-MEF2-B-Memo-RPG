@@ -186,19 +186,20 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
     }
 }
 
-void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ //ATTENTION TABLEAU DE JOUEUR ICI
+void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
-    while(fin_de_partie==0){
-        for(int i=0;i<nb_joueurs;i++){
-            printf("Cest au joueurs numéro %d de jouer\n",i+1);
-            deplacement(joueur[i],tab);
-            choix_arme(joueur[i],tab);
-            resolution_case(&joueur[i],tab);
-            if(joueur[i]->aLeTresor==1 && joueur[i]->aLarme==1){
-                printf("Le joueur numéro %d a gagné\n",i+1);
-                fin_de_partie=1;
+    while(fin_de_partie == 0){
+        for(int i = 0; i < nb_joueurs; i++){
+            printf("C'est au joueur numero %d de jouer\n", i + 1);
+            deplacement(&joueur[i], tab);
+            choix_arme(&joueur[i]);
+            resolution_case(&joueur[i], tab);
+            if(joueur[i].aLeTresor == 1 && joueur[i].aLarme == 1){
+                printf("Le joueur numero %d a gagne\n", i + 1);
+                fin_de_partie = 1;
                 break;
             }
         }
     }
 }
+
