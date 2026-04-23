@@ -28,5 +28,11 @@ typedef struct {
 }Case;
 
 typedef struct {
+    char nom[50];
+    int partiesJouees;
+    int victoires;
+} StatJoueur;
+
+typedef struct {
     Case tableau[TAILLE][TAILLE]
 }Plateau; // Pour faciliter l'implémentation du plateau et épurer le main()
