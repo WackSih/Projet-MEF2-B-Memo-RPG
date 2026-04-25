@@ -19,7 +19,7 @@ typedef struct {
     int aLeTresor;
     Arme arme_actuelle;
     int ligne;
-    int colone;
+    int colonne;
 } Personnage;
 
 
