@@ -186,6 +186,52 @@ void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire lacti
     }
 }
 
+void afficher_plateau(Plateau* p, Personnage* joueurs, int nb_joueurs) {
+    printf("\n      0   1   2   3   4\n");
+    printf("    ---------------------\n");
+    
+    for (int i = 0; i < TAILLE; i++) { // i = ligne
+        printf(" %d |", i);
+        for (int j = 0; j < TAILLE; j++) { // j = colonne
+            
+            // 1. L'Arbitre vérifie si un joueur est sur cette case précise
+            int joueur_trouve = -1;
+            for (int k = 0; k < nb_joueurs; k++) {
+                if (joueurs[k].ligne == i && joueurs[k].colonne == j) {
+                    joueur_trouve = k;
+                    break; // On a trouvé, on arrête de chercher pour cette case
+                }
+            }
+
+            // 2. Priorité à l'affichage du joueur
+            if (joueur_trouve != -1) {
+                printf(" J%d ", joueur_trouve + 1); 
+            } 
+            // 3. Sinon, si la case est encore cachée
+            else if (p->tableau[i][j].est_decouverte == 0) {
+                printf("  ? ");
+            } 
+            // 4. Sinon, on affiche le contenu découvert
+            else {
+                Type_case t = p->tableau[i][j].type;
+                switch(t) {
+                    case DRAGON:   printf("  D "); break;
+                    case ORC:      printf("  O "); break;
+                    case NAZGUL:   printf("  N "); break;
+                    case ARAIGNE:  printf("  A "); break;
+                    case PORTAIL:  printf("  P "); break;
+                    case TOTEM:    printf("  T "); break;
+                    case TRESOR:   printf("  $ "); break;
+                    case ARME_SPE: printf("  W "); break; // W pour Weapon (Arme spé)
+                    default:       printf("  . "); break;
+                }
+            }
+        }
+        printf(" |\n");
+    }
+    printf("    ---------------------\n");
+}
+
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
     while(fin_de_partie == 0){
