@@ -19,7 +19,7 @@ Plateau initialisation(){
         liste[i].proprietaire = -1;
     }
     for(i=12 ; i<16 ; i++){
-        liste[i].type = ARAIGNE;
+        liste[i].type = ARAIGNEE;
         liste[i].proprietaire = -1;
     }
 
