@@ -11,7 +11,7 @@
 // Enums
 typedef enum { GANDALF, TAURIEL, GOLLUM, GIMLI } Classe;
 typedef enum { BATON, ARC_M, ANNEAU, HACHE } Arme_spe;
-typedef enum { DRAGON, ORC, NAZGUL, ARAIGNE, PORTAIL, TOTEM, TRESOR, ARME_SPE, ARAIGNEE, ARC_M, BATON, ANNEAU, HACHE } Type_case;
+typedef enum { DRAGON, ORC, NAZGUL, ARAIGNE, PORTAIL, TOTEM, TRESOR, ARME_SPE, ARAIGNEE} Type_case;
 typedef enum { ARC, EPEE, BDF, LANCE } Arme;
 
 // Structures
