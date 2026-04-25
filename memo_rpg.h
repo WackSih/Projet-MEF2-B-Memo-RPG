@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sdl.h>
 #include <time.h>
+#include <string.h>
 
 //création des différentes structures
 
