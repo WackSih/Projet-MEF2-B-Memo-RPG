@@ -89,7 +89,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
         }
     }
     if (x->perso == GANDALF) {
-        x->ligne = -1; 
+        x->ligne = 0; 
         x->colonne = 2;
     }
     else if (x->perso == TAURIEL) {
@@ -102,7 +102,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
     }
     else if (x->perso == GIMLI) {
         x->ligne = 2;
-        x->colonne = -1;
+        x->colonne = 0;
     }
     x->aLarme = 0;
     x->aLeTresor = 0;
@@ -199,51 +199,54 @@ void resolution_case(Personnage* x, Plateau* tab){
     }
 }
 
-void afficher_plateau(Plateau* p, Personnage* joueurs, int nb_joueurs) {
-    printf("\n      0   1   2   3   4\n");
-    printf("    ---------------------\n");
+void afficher_plateau(Plateau tab, Personnage tab_joueurs[], int nb_joueurs) {
+    printf("\n      --- PLATEAU DE JEU ---\n\n");
     
-    for (int i = 0; i < TAILLE; i++) { // i = ligne
-        printf(" %d |", i);
-        for (int j = 0; j < TAILLE; j++) { // j = colonne
-            
-            // 1. L'Arbitre vérifie si un joueur est sur cette case précise
-            int joueur_trouve = -1;
+    // Affichage des numéros de colonnes pour se repérer
+    printf("    0   1   2   3   4   5\n");
+    printf("  +---+---+---+---+---+---+\n");
+
+    for (int i = 0; i < TAILLE; i++) {
+        printf("%d |", i); // Numéro de ligne
+
+        for (int j = 0; j < TAILLE; j++) {
+            int joueur_present = -1;
+
+            // 1. On vérifie si un joueur est sur cette case (priorité affichage)
             for (int k = 0; k < nb_joueurs; k++) {
-                if (joueurs[k].ligne == i && joueurs[k].colonne == j) {
-                    joueur_trouve = k;
-                    break; // On a trouvé, on arrête de chercher pour cette case
+                if (tab_joueurs[k].ligne == i && tab_joueurs[k].colonne == j) {
+                    joueur_present = k;
+                    break;
                 }
             }
 
-            // 2. Priorité à l'affichage du joueur
-            if (joueur_trouve != -1) {
-                printf(" J%d ", joueur_trouve + 1); 
+            if (joueur_present != -1) {
+                // On affiche J1, J2, J3 ou J4
+                printf(" J%d|", joueur_present + 1);
             } 
-            // 3. Sinon, si la case est encore cachée
-            else if (p->tableau[i][j].est_decouverte == 0) {
-                printf("  ? ");
+            else if (tab.tableau[i][j].est_decouverte == 0) {
+                // Case non découverte
+                printf(" ? |");
             } 
-            // 4. Sinon, on affiche le contenu découvert
             else {
-                Type_case t = p->tableau[i][j].type;
-                switch(t) {
-                    case DRAGON:   printf("  D "); break;
-                    case ORC:      printf("  O "); break;
-                    case NAZGUL:   printf("  N "); break;
-                    case ARAIGNE:  printf("  A "); break;
-                    case PORTAIL:  printf("  P "); break;
-                    case TOTEM:    printf("  T "); break;
-                    case TRESOR:   printf("  $ "); break;
-                    case ARME_SPE: printf("  W "); break; // W pour Weapon (Arme spé)
-                    default:       printf("  . "); break;
-                }
+                // Case découverte : on affiche un symbole selon le type
+                Type_case t = tab.tableau[i][j].type;
+                if (t == DRAGON) printf(" D |");
+                else if (t == ORC) printf(" O |");
+                else if (t == NAZGUL) printf(" N |");
+                else if (t == ARAIGNEE) printf(" A |");
+                else if (t == TRESOR) printf(" T |");
+                else if (t == ARME_SPE) printf(" W |"); // W pour Weapon
+                else if (t == PORTAIL) printf(" P |");
+                else if (t == TOTEM) printf(" M |"); // M pour Magie/Totem
+                else printf("   |"); // Case vide
             }
         }
-        printf(" |\n");
+        printf("\n  +---+---+---+---+---+---+\n");
     }
-    printf("    ---------------------\n");
+    printf("\n");
 }
+
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
     while(fin_de_partie == 0){
