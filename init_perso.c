@@ -62,3 +62,4 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
 			tab_joueurs[i].arme_a_trouver = HACHE; // ARME_SPE de Gimli
 			deja_pris[3] = 1;}
     }
+}
