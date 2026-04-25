@@ -81,8 +81,8 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
 }
 
 void reset_tableau(Personnage* x, Plateau* tab) {
-    for (int i = 0; i < 5; i++) { 
-        for (int j = 0; j < 5; j++) { 
+    for (int i = 0; i < TAILLE; i++) { 
+        for (int j = 0; j < TAILLE; j++) { 
             tab->tableau[i][j].est_decouverte = 0; 
         }
     }
