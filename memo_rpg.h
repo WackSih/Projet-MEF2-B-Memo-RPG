@@ -34,7 +34,7 @@ typedef struct {
 }Case;
 
 typedef struct {
-    Case tableau[TAILLE][TAILLE]
+    Case tableau[TAILLE][TAILLE];
 }Plateau; // Pour faciliter l'implémentation du plateau et épurer le main()
 
 Plateau initialisation();
