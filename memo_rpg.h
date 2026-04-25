@@ -6,7 +6,7 @@
 #include <time.h>
 #include <string.h>
 
-#define TAILLE 5
+#define TAILLE 6
 
 // Enums
 typedef enum { GANDALF, TAURIEL, GOLLUM, GIMLI } Classe;
