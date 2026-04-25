@@ -4,6 +4,7 @@
 #include <time.h>
 #include <string.h>
 
+#define TAILLE 5
 //création des différentes structures
 
 
