@@ -5,7 +5,7 @@ int main() {
 
     // 1. Initialisation
     Plateau monPlateau = initialisation();
-    int nb_joueurs = 2; // On peut demander un scanf ici
+    int nb_joueurs ; // On peut demander un scanf ici
     Personnage joueurs[4];
 
     // 2. Préparation des joueurs
