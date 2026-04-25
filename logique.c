@@ -25,19 +25,21 @@ int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
 
 }
 
-void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire les deplacements
+void deplacement(Personnage* x, Plateau* tab){ // Ta fonction originale
     int choixdeplacement;
     int deplacement_valide = 0; 
     do {
-        do{
-        printf("Ou voulez vous aller ?\n");
-        printf("1 -> Haut\n 2 -> Bas\n 3 -> Droite\n 4 -> Gauche\n");
-        scanf("%d", &choixdeplacement);
-        if (choixdeplacement > 4 || choixdeplacement < 1) {
-            printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
-        }
-        }while(choixdeplacement > 4 || choixdeplacement < 1);
-        if (choixdeplacement == 1) {
+        do {
+            printf("Ou voulez vous aller ?\n");
+            printf("1 -> Haut\n 2 -> Bas\n 3 -> Droite\n 4 -> Gauche\n");
+            scanf("%d", &choixdeplacement);
+            if (choixdeplacement > 4 || choixdeplacement < 1) {
+                printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
+            }
+        } while(choixdeplacement > 4 || choixdeplacement < 1);
+
+        if (choixdeplacement == 1) { // HAUT
+            // L'Arbitre vérifie si la case d'arrivée (ligne - 1) est valide
             if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 1) {
                 printf("Déplacement valide\n");
                 x->ligne = x->ligne - 1;
@@ -47,7 +49,7 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
                 printf("Erreur, choisissez un autre deplacement\n");
             }
         }
-        else if (choixdeplacement == 2) {
+        else if (choixdeplacement == 2) { // BAS
             if (verifcaselibre(tab, x->colonne, x->ligne + 1) == 1) {
                 printf("Déplacement valide\n");
                 x->ligne = x->ligne + 1;
@@ -57,7 +59,7 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
                 printf("Erreur, choisissez un autre deplacement\n");
             }
         }
-        else if (choixdeplacement == 3) {
+        else if (choixdeplacement == 3) { // DROITE
             if (verifcaselibre(tab, x->colonne + 1, x->ligne) == 1) {
                 printf("Déplacement valide\n");
                 x->colonne = x->colonne + 1;
@@ -67,7 +69,7 @@ void deplacement(Personnage* x, Plateau* tab){ //FOnction qui permet de faire le
                 printf("Erreur, choisissez un autre deplacement\n");
             }
         }
-        else if (choixdeplacement == 4) {
+        else if (choixdeplacement == 4) { // GAUCHE
             if (verifcaselibre(tab, x->colonne - 1, x->ligne) == 1) {
                 printf("Déplacement valide\n");
                 x->colonne = x->colonne - 1;
@@ -86,7 +88,24 @@ void reset_tableau(Personnage* x, Plateau* tab) {
             tab->tableau[i][j].est_decouverte = 0; 
         }
     }
-    // RESET ICI (attente coordonnes depart)
+    if (x->perso == GANDALF) {
+        x->ligne = -1; 
+        x->colonne = 2;
+    }
+    else if (x->perso == TAURIEL) {
+        x->ligne = 2;
+        x->colonne = 5;
+    }
+    else if (x->perso == GOLLUM) {
+        x->ligne = 5;
+        x->colonne = 2;
+    }
+    else if (x->perso == GIMLI) {
+        x->ligne = 2;
+        x->colonne = -1;
+    }
+    x->aLarme = 0;
+    x->aLeTresor = 0;
     printf("Le labyrinthe se referme... Retour a la case depart !\n");
 }
 
@@ -231,11 +250,11 @@ void afficher_plateau(Plateau* p, Personnage* joueurs, int nb_joueurs) {
     }
     printf("    ---------------------\n");
 }
-
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
     while(fin_de_partie == 0){
         for(int i = 0; i < nb_joueurs; i++){
+            afficher_plateau(tab, joueur, nb_joueurs);
             printf("C'est au joueur numero %d de jouer\n", i + 1);
             deplacement(&joueur[i], tab);
             choix_arme(&joueur[i]);
