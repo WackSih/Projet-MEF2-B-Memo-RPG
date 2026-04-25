@@ -116,7 +116,6 @@ void resolution_case(Personnage* x, Plateau* tab){
     // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
     if(case_actuelle == DRAGON){
         printf("\nUn DRAGON bloque la route ! Preparez-vous au combat.\n");
-        choix_arme(x); 
         if(x->arme_actuelle == ARC){
             printf("SUCCESS : Le monstre est vaincu par votre ARC !\n");
         }else{
@@ -126,7 +125,6 @@ void resolution_case(Personnage* x, Plateau* tab){
     }
     if(case_actuelle == ORC){
         printf("\nUn ORC surgit des ombres ! Preparez-vous au combat.\n");
-        choix_arme(x);
         if(x->arme_actuelle == EPEE){
             printf("SUCCESS : Le monstre est vaincu par votre EPEE !\n");
         }else{
@@ -136,7 +134,6 @@ void resolution_case(Personnage* x, Plateau* tab){
     }
     if(case_actuelle == NAZGUL){
         printf("\nUn NAZGUL fond sur vous ! Preparez-vous au combat.\n");
-        choix_arme(x);
         if(x->arme_actuelle == BDF){
             printf("SUCCESS : Le monstre est vaincu par votre BOULE DE FEU !\n");
         }else{
@@ -146,7 +143,6 @@ void resolution_case(Personnage* x, Plateau* tab){
     }
     if(case_actuelle == ARAIGNEE || case_actuelle == ARAIGNE){
         printf("\nUne ARAIGNEE GEANTE vous barre le chemin ! Preparez-vous au combat.\n");
-        choix_arme(x);
         if(x->arme_actuelle == LANCE){
             printf("SUCCESS : Le monstre est vaincu par votre LANCE !\n");
         }else{
