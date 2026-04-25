@@ -109,99 +109,97 @@ void reset_tableau(Personnage* x, Plateau* tab) {
     printf("Le labyrinthe se referme... Retour a la case depart !\n");
 }
 
-void resolution_case(Personnage* x, Plateau* tab){ //FOnction qui va faire laction de la case
+void resolution_case(Personnage* x, Plateau* tab){ 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
+
+    // --- MONSTRES ---
+    // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
     if(case_actuelle == DRAGON){
+        printf("\nUn DRAGON bloque la route ! Preparez-vous au combat.\n");
+        choix_arme(x); 
         if(x->arme_actuelle == ARC){
-            printf("Le monstre est vaincu\n");
+            printf("SUCCESS : Le monstre est vaincu par votre ARC !\n");
         }else{
-            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            printf("DEFAITE : Vous aviez la mauvaise arme, le DRAGON vous a battu...\n");
             reset_tableau(x,tab);
         }
     }
     if(case_actuelle == ORC){
+        printf("\nUn ORC surgit des ombres ! Preparez-vous au combat.\n");
+        choix_arme(x);
         if(x->arme_actuelle == EPEE){
-            printf("Le monstre est vaincu\n");
+            printf("SUCCESS : Le monstre est vaincu par votre EPEE !\n");
         }else{
-            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            printf("DEFAITE : Vous aviez la mauvaise arme, l'ORC vous a battu...\n");
             reset_tableau(x,tab);
         }
     }
     if(case_actuelle == NAZGUL){
+        printf("\nUn NAZGUL fond sur vous ! Preparez-vous au combat.\n");
+        choix_arme(x);
         if(x->arme_actuelle == BDF){
-            printf("Le monstre est vaincu\n");
+            printf("SUCCESS : Le monstre est vaincu par votre BOULE DE FEU !\n");
         }else{
-            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            printf("DEFAITE : Vous aviez la mauvaise arme, le NAZGUL vous a battu...\n");
             reset_tableau(x,tab);
         }
     }
-    if(case_actuelle == ARAIGNE){
+    if(case_actuelle == ARAIGNEE || case_actuelle == ARAIGNE){
+        printf("\nUne ARAIGNEE GEANTE vous barre le chemin ! Preparez-vous au combat.\n");
+        choix_arme(x);
         if(x->arme_actuelle == LANCE){
-            printf("Le monstre est vaincu\n");
+            printf("SUCCESS : Le monstre est vaincu par votre LANCE !\n");
         }else{
-            printf("Vous aviez la mauvaise arme, dommage vous etes mort\n");
+            printf("DEFAITE : Vous aviez la mauvaise arme, l'ARAIGNEE vous a battu...\n");
             reset_tableau(x,tab);
         }
     }
-    if(case_actuelle == HACHE){
-        if(x->perso == GIMLI){
-            printf("Vous avez trouvé votre Arme\n");
+
+    // --- OBJETS ET ARMES SPECIALES ---
+    // Ici on garde ta logique de vérification par personnage
+    if(case_actuelle == ARME_SPE){
+        // On utilise le propriétaire défini à l'initialisation (0=Gandalf, 1=Tauriel, etc.)
+        if(tab->tableau[x->ligne][x->colonne].proprietaire == (int)x->perso){
+            printf("\nGenial ! %s, vous avez trouve votre Arme de quete !\n", x->nomJoueur);
             x->aLarme = 1;
         }else{
-            printf("Ce n'est pas votre trésor\n");
+            printf("\nVous trouvez une arme au sol... mais ce n'est pas la votre.\n");
         }
     }
-    if(case_actuelle == ANNEAU){
-        if(x->perso == GOLLUM){
-            printf("Vous avez trouvé votre Arme\n");
-            x->aLarme = 1;
-        }else{
-            printf("Ce n'est pas votre trésor\n");
-        }
-    }
-    if(case_actuelle == ARC_M){
-        if(x->perso == TAURIEL){
-            printf("Vous avez trouvé votre Arme\n");
-            x->aLarme = 1;
-        }else{
-            printf("Ce n'est pas votre trésor\n");
-        }
-    }
-    if(case_actuelle == BATON){
-        if(x->perso == GANDALF){
-            printf("Vous avez trouvé votre Arme\n");
-            x->aLarme = 1;
-        }else{
-            printf("Ce n'est pas votre trésor\n");
-        }
-    }
+
     if(case_actuelle == TRESOR){
-        printf("Vous avez trouvé le Trésor !\n");
+        printf("\nINCROYABLE ! %s, vous avez trouve le Tresor !\n", x->nomJoueur);
         x->aLeTresor = 1;
     }
+
+    // --- CASES SPECIALES ---
     if(case_actuelle == TOTEM){
         int colonne, ligne;
+        printf("\nVous etes tombe sur un Totem ! La magie va operer...\n");
         do{
-            printf("Vous etes tombe sur un Totem\n");
-            printf("Entrez la ligne puis la colonne de la case CACHEE que vous voulez echanger\n");
+            printf("Entrez la ligne puis la colonne d'une case CACHEE pour l'echanger : ");
             scanf("%d %d", &ligne, &colonne);
         } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4 || tab->tableau[ligne][colonne].est_decouverte == 1); 
+        
         Type_case temp = tab->tableau[ligne][colonne].type;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[x->ligne][x->colonne].type = temp;
+        printf("Les cases ont ete permutees !\n");
     }
+
     if(case_actuelle == PORTAIL){
         int colonne, ligne;
+        printf("\nUn portail de teleportation ! Ou voulez-vous apparaitre ?\n");
         do{
-            printf("Vous etes tombe sur un portail de teleportation\n");
-            printf("Choississez la case ou vous voulez vous teleporter\n");
+            printf("Entrez la ligne puis la colonne : ");
             scanf("%d %d", &ligne, &colonne);
         } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4); 
+        
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
-        printf("Vous vous etes teleporte en [%d][%d] !\n", ligne, colonne);
-        resolution_case(x, tab); 
+        printf("Vouuuuh ! Teleportation en [%d][%d] !\n", ligne, colonne);
+        resolution_case(x, tab); // On relance la logique sur la nouvelle case
     }
 }
 
