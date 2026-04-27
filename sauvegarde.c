@@ -23,7 +23,6 @@ int charger_stats(StatJoueur tableau[],int max_joueurs) {//on aura besoin d'un n
 
 
 //sauvegarde tous les joueurs gagnant dans le fichier 
-//-> besoin d'une fonction dans le main ou autre part qui permet d'ajouter un nouveau joueur gagnant dans le tableau 
 int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
 
     FILE* fichier=NULL;
@@ -40,4 +39,33 @@ int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
     fclose(fichier);
     printf("Statistiques sauvegardées avec succès.\n");
     return 1; // enregistrement effectué
+}
+
+
+void mettre_a_jour_stats(const char* nom, int a_gagne) {
+    StatJoueur tableau[100];
+    int nb = charger_stats(tableau, 100);
+
+    // Cherche si le joueur existe déjà
+    int trouve = -1;
+    for (int i = 0; i < nb; i++) {
+        if (strcmp(tableau[i].nom, nom) == 0) {
+            trouve = i;
+            break;
+        }
+    }
+
+    if (trouve == -1) {
+        // Nouveau joueur : on l'ajoute
+        strncpy(tableau[nb].nom, nom,49);
+        tableau[nb].parties = 1;
+        tableau[nb].victoires = a_gagne;
+        nb++;
+    } else {
+        // Joueur existant : on met à jour
+        tableau[trouve].parties++;
+        tableau[trouve].victoires += a_gagne;
+    }
+
+    sauvegarder_stats(tableau, nb);
 }
