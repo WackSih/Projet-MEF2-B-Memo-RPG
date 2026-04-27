@@ -1,20 +1,18 @@
-#include "memo_rpg.h"
-
+// --- Dans main.c ---
 int main() {
-    srand(time(NULL)); // Indispensable pour le mélange du plateau !
-
-    // 1. Initialisation
-    Plateau monPlateau = initialisation();
-    int nb_joueurs = 2; // On peut demander un scanf ici
+    srand(time(NULL));
+    int nb_joueurs = 2; // Ou scanf
     Personnage joueurs[4];
 
-    // 2. Préparation des joueurs
-    select_perso(joueurs, nb_joueurs);
+    // 1. On choisit les persos d'abord
+    select_perso(joueurs, nb_joueurs); 
+
+    // 2. On génère le plateau en lui passant le tableau des joueurs
+    Plateau monPlateau = initialisation(joueurs, nb_joueurs);
+
+    // 3. On place les joueurs
     depart(joueurs, nb_joueurs);
 
-    // 3. Boucle de jeu
-    printf("\n--- DEBUT DU COMBAT ---\n");
     deroulement_jeu(&monPlateau, joueurs, nb_joueurs);
-
     return 0;
 }
