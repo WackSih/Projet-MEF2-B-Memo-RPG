@@ -1,3 +1,7 @@
+#include "memo_rpg.h"
+
+
+
 // --- Dans main.c ---
 int main() {
     srand(time(NULL));
@@ -14,5 +18,13 @@ int main() {
     depart(joueurs, nb_joueurs);
 
     deroulement_jeu(&monPlateau, joueurs, nb_joueurs);
+
+    // Affichage du classement final
+    StatJoueur stats[100];
+    int nb_stats = charger_stats(stats, 100);
+    printf("\n--- CLASSEMENT ---\n");
+    for(int i = 0; i < nb_stats; i++){
+        printf("%s : %d parties, %d victoires\n", stats[i].nom, stats[i].parties, stats[i].victoires);
+    }
     return 0;
 }
