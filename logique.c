@@ -12,17 +12,20 @@ Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur ava
 }
 
 int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
-    if (ligne_new < 0 || ligne_new > 4) {
-        return 0; //Sortie tableau
+    // Bornes passées à 6 pour le plateau 7x7 (indices 0 à 6)
+    if (ligne_new < 0 || ligne_new > 6) {
+        return 0; // Sortie tableau
     }
-    if (colonne_new < 0 || colonne_new > 4) {
-        return 0; //Sortie tableau
+    if (colonne_new < 0 || colonne_new > 6) {
+        return 0; // Sortie tableau
     }
+    
+    // Ta condition : on ne peut pas marcher sur une case déjà révélée
     if(tab->tableau[ligne_new][colonne_new].est_decouverte == 1){
-        return 0; //Case deja decouverte il peut pas retourner dessus
+        return 0; 
     }
-    return 1; //Toutes les conditions sont bonnes il peut aller sur la case
-
+    
+    return 1; // Le déplacement est autorisé
 }
 
 void deplacement(Personnage* x, Plateau* tab){ // Ta fonction originale
@@ -83,30 +86,33 @@ void deplacement(Personnage* x, Plateau* tab){ // Ta fonction originale
 }
 
 void reset_tableau(Personnage* x, Plateau* tab) {
+    // 1. On cache uniquement le labyrinthe central (indices 1 à 5)
     for (int i = 0; i < TAILLE; i++) { 
         for (int j = 0; j < TAILLE; j++) { 
-            tab->tableau[i][j].est_decouverte = 0; 
+            // Si on n'est PAS sur une des 4 cases de spawn, on cache
+            if (!((i == 0 && j == 3) || (i == 3 && j == 0) || (i == 6 && j == 3) || (i == 3 && j == 6))) {
+                tab->tableau[i][j].est_decouverte = 0; 
+            } else {
+                tab->tableau[i][j].est_decouverte = 1; // Le spawn reste visible
+            }
         }
     }
+    // 2. Positions exactes sur la croix (indices 0, 3, 6)
     if (x->perso == GANDALF) {
-        x->ligne = 0; 
-        x->colonne = 2;
+        x->ligne = 0; x->colonne = 3;
     }
     else if (x->perso == TAURIEL) {
-        x->ligne = 2;
-        x->colonne = 5;
+        x->ligne = 3; x->colonne = 6;
     }
     else if (x->perso == GOLLUM) {
-        x->ligne = 5;
-        x->colonne = 2;
+        x->ligne = 3; x->colonne = 0;
     }
     else if (x->perso == GIMLI) {
-        x->ligne = 2;
-        x->colonne = 0;
+        x->ligne = 6; x->colonne = 3;
     }
     x->aLarme = 0;
     x->aLeTresor = 0;
-    printf("Le labyrinthe se referme... Retour a la case depart !\n");
+    printf("\n[DEFAITE] Le labyrinthe se referme... %s revient au point de depart !\n", x->nomJoueur);
 }
 
 void resolution_case(Personnage* x, Plateau* tab){ 
@@ -199,20 +205,17 @@ void resolution_case(Personnage* x, Plateau* tab){
     }
 }
 
-void afficher_plateau(Plateau tab, Personnage tab_joueurs[], int nb_joueurs) {
-    printf("\n      --- PLATEAU DE JEU ---\n\n");
+void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
+    printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
     
-    // Affichage des numéros de colonnes pour se repérer
-    printf("    0   1   2   3   4   5\n");
-    printf("  +---+---+---+---+---+---+\n");
+    // On affiche les indices de 0 à 6
+    printf("    0   1   2   3   4   5   6\n");
+    printf("  +---+---+---+---+---+---+---+\n");
 
     for (int i = 0; i < TAILLE; i++) {
-        printf("%d |", i); // Numéro de ligne
-
+        printf("%d |", i); 
         for (int j = 0; j < TAILLE; j++) {
             int joueur_present = -1;
-
-            // 1. On vérifie si un joueur est sur cette case (priorité affichage)
             for (int k = 0; k < nb_joueurs; k++) {
                 if (tab_joueurs[k].ligne == i && tab_joueurs[k].colonne == j) {
                     joueur_present = k;
@@ -221,30 +224,27 @@ void afficher_plateau(Plateau tab, Personnage tab_joueurs[], int nb_joueurs) {
             }
 
             if (joueur_present != -1) {
-                // On affiche J1, J2, J3 ou J4
                 printf(" J%d|", joueur_present + 1);
             } 
-            else if (tab.tableau[i][j].est_decouverte == 0) {
-                // Case non découverte
-                printf(" ? |");
+            else if (tab->tableau[i][j].type == VIDE) {
+                printf("   |"); // Les coins sont vides
             } 
             else {
-                // Case découverte : on affiche un symbole selon le type
-                Type_case t = tab.tableau[i][j].type;
+                // Affichage des symboles (D, O, N, A, etc.)
+                Type_case t = tab->tableau[i][j].type;
                 if (t == DRAGON) printf(" D |");
                 else if (t == ORC) printf(" O |");
                 else if (t == NAZGUL) printf(" N |");
-                else if (t == ARAIGNEE) printf(" A |");
+                else if (t == ARAIGNEE || t == ARAIGNE) printf(" A |");
                 else if (t == TRESOR) printf(" T |");
-                else if (t == ARME_SPE) printf(" W |"); // W pour Weapon
+                else if (t == ARME_SPE) printf(" W |");
                 else if (t == PORTAIL) printf(" P |");
-                else if (t == TOTEM) printf(" M |"); // M pour Magie/Totem
-                else printf("   |"); // Case vide
+                else if (t == TOTEM) printf(" M |");
+                else printf("   |");
             }
         }
-        printf("\n  +---+---+---+---+---+---+\n");
+        printf("\n  +---+---+---+---+---+---+---+\n");
     }
-    printf("\n");
 }
 
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
