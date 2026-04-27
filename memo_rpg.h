@@ -6,12 +6,12 @@
 #include <time.h>
 #include <string.h>
 
-#define TAILLE 6
+#define TAILLE 7
 
 // Enums
 typedef enum { GANDALF, TAURIEL, GOLLUM, GIMLI } Classe;
 typedef enum { BATON, ARC_M, ANNEAU, HACHE } Arme_spe;
-typedef enum { DRAGON, ORC, NAZGUL, ARAIGNE, PORTAIL, TOTEM, TRESOR, ARME_SPE, ARAIGNEE} Type_case;
+typedef enum {VIDE, DRAGON, ORC, NAZGUL, ARAIGNE, PORTAIL, TOTEM, TRESOR, ARME_SPE, ARAIGNEE} Type_case;
 typedef enum { ARC, EPEE, BDF, LANCE } Arme;
 
 // Structures
