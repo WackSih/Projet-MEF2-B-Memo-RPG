@@ -112,6 +112,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
     }
     x->aLarme = 0;
     x->aLeTresor = 0;
+    mettre_a_jour_stats(x->nomJoueur, 0); // 0 = défaite
     printf("\n[DEFAITE] Le labyrinthe se referme... %s revient au point de depart !\n", x->nomJoueur);
 }
 
@@ -258,10 +259,13 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
             resolution_case(&joueur[i], tab);
             if(joueur[i].aLeTresor == 1 && joueur[i].aLarme == 1){
                 printf("Le joueur numero %d a gagne\n", i + 1);
+                mettre_a_jour_stats(joueur[i].nomJoueur, 1); // 1 = victoire
                 fin_de_partie = 1;
                 break;
             }
         }
     }
 }
+
+
 
