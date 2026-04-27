@@ -39,24 +39,21 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
         // On demande le choix au moins une fois
         printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli  : \n", i + 1);
         scanf("%d", &choix); 
-
+        printf("\n Joueur %d, quel est votre pseudo ?\n");
+        scanf("%s", tab_joueurs[i].nomJoueur);
         // On simplifie : on enregistre direct
         tab_joueurs[i].perso = (Classe)(choix - 1); 
 
         if (choix == 1) {
-            strcpy(tab_joueurs[i].nomJoueur, "Gandalf");
             tab_joueurs[i].arme_a_trouver = BATON;
         }
         else if (choix == 2) {
-            strcpy(tab_joueurs[i].nomJoueur, "Tauriel");
             tab_joueurs[i].arme_a_trouver = ARC_M;
         }
         else if (choix == 3) {
-            strcpy(tab_joueurs[i].nomJoueur, "Gollum");
             tab_joueurs[i].arme_a_trouver = ANNEAU;
         }
         else if (choix == 4) {
-            strcpy(tab_joueurs[i].nomJoueur, "Gimli");
             tab_joueurs[i].arme_a_trouver = HACHE;
         }
         
