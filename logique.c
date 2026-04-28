@@ -116,8 +116,9 @@ void reset_tableau(Personnage* x, Plateau* tab) {
     printf("\n[DEFAITE] Le labyrinthe se referme... %s revient au point de depart !\n", x->nomJoueur);
 }
 
-void resolution_case(Personnage* x, Plateau* tab){ 
+int resolution_case(Personnage* x, Plateau* tab){ 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
+    int mort = 0; // Variable pour retenir si on meurt dans un portail
 
     // --- MONSTRES ---
     // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
@@ -128,6 +129,7 @@ void resolution_case(Personnage* x, Plateau* tab){
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le DRAGON vous a battu...\n");
             reset_tableau(x,tab);
+            return 1; // <--- AJOUT : On signale la mort
         }
     }
     if(case_actuelle == ORC){
@@ -137,6 +139,7 @@ void resolution_case(Personnage* x, Plateau* tab){
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ORC vous a battu...\n");
             reset_tableau(x,tab);
+            return 1; // <--- AJOUT : On signale la mort
         }
     }
     if(case_actuelle == NAZGUL){
@@ -146,15 +149,17 @@ void resolution_case(Personnage* x, Plateau* tab){
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le NAZGUL vous a battu...\n");
             reset_tableau(x,tab);
+            return 1; // <--- AJOUT : On signale la mort
         }
     }
-    if(case_actuelle == ARAIGNEE || case_actuelle == ARAIGNE){
+    if(case_actuelle == ARAIGNEE){
         printf("\nUne ARAIGNEE GEANTE vous barre le chemin ! Preparez-vous au combat.\n");
         if(x->arme_actuelle == LANCE){
             printf("SUCCESS : Le monstre est vaincu par votre LANCE !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ARAIGNEE vous a battu...\n");
             reset_tableau(x,tab);
+            return 1; // <--- AJOUT : On signale la mort
         }
     }
 
@@ -182,7 +187,7 @@ void resolution_case(Personnage* x, Plateau* tab){
         do{
             printf("Entrez la ligne puis la colonne d'une case CACHEE pour l'echanger : ");
             scanf("%d %d", &ligne, &colonne);
-        } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4 || tab->tableau[ligne][colonne].est_decouverte == 1); 
+        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1); // <--- CORRECTION 7x7 (6 au lieu de 4)
         
         Type_case temp = tab->tableau[ligne][colonne].type;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
@@ -196,14 +201,17 @@ void resolution_case(Personnage* x, Plateau* tab){
         do{
             printf("Entrez la ligne puis la colonne : ");
             scanf("%d %d", &ligne, &colonne);
-        } while(ligne < 0 || ligne > 4 || colonne < 0 || colonne > 4); 
+        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6); // <--- CORRECTION 7x7 (6 au lieu de 4)
         
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
         printf("Vouuuuh ! Teleportation en [%d][%d] !\n", ligne, colonne);
-        resolution_case(x, tab); // On relance la logique sur la nouvelle case
+        mort = resolution_case(x, tab); // <--- AJOUT : On récupère la mort potentielle dans le portail
+        return mort; 
     }
+
+    return 0; // <--- AJOUT : Si le code arrive ici, c'est que le joueur a survécu !
 }
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
@@ -236,11 +244,12 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 if (t == DRAGON) printf(" D |");
                 else if (t == ORC) printf(" O |");
                 else if (t == NAZGUL) printf(" N |");
-                else if (t == ARAIGNEE || t == ARAIGNE) printf(" A |");
+                else if (t == ARAIGNEE) printf(" A |");
                 else if (t == TRESOR) printf(" T |");
                 else if (t == ARME_SPE) printf(" W |");
                 else if (t == PORTAIL) printf(" P |");
                 else if (t == TOTEM) printf(" M |");
+                else if (t == DEPART) printf(" S |");
                 else printf("   |");
             }
         }
@@ -252,17 +261,29 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
     int fin_de_partie = 0;
     while(fin_de_partie == 0){
         for(int i = 0; i < nb_joueurs; i++){
-            afficher_plateau(tab, joueur, nb_joueurs);
-            printf("C'est au joueur numero %d de jouer\n", i + 1);
-            deplacement(&joueur[i], tab);
-            choix_arme(&joueur[i]);
-            resolution_case(&joueur[i], tab);
-            if(joueur[i].aLeTresor == 1 && joueur[i].aLarme == 1){
-                printf("Le joueur numero %d a gagne\n", i + 1);
-                mettre_a_jour_stats(joueur[i].nomJoueur, 1); // 1 = victoire
-                fin_de_partie = 1;
-                break;
+            
+            int mort = 0; // Le joueur commence son tour bien vivant
+
+            // Tant que le joueur est en vie et que la partie n'est pas finie, il rejoue !
+            while(mort == 0 && fin_de_partie == 0) {
+                afficher_plateau(tab, joueur, nb_joueurs);
+                printf("\n=============================\n");
+                printf(" C'est à %s de jouer\n", joueur[i].nomJoueur);
+                printf("=============================\n");
+                
+                deplacement(&joueur[i], tab);
+                choix_arme(&joueur[i]);
+                
+                // On récupère 1 si mort, 0 si vivant
+                mort = resolution_case(&joueur[i], tab);
+                
+                if(joueur[i].aLeTresor == 1 && joueur[i].aLarme == 1){
+                    printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueur[i].nomJoueur);
+                    mettre_a_jour_stats(joueur[i].nomJoueur, 1); // 1 = victoire
+                    fin_de_partie = 1;
+                }
             }
+            // Quand "mort" passe à 1, la boucle s'arrête et on passe au joueur suivant (le "for")
         }
     }
 }
