@@ -12,6 +12,9 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
     for(i = 0; i < 4; i++) { liste[compteur].type = ARAIGNEE; liste[compteur].proprietaire = -1; compteur++; }
     liste[compteur].type = TRESOR; liste[compteur].proprietaire = -1; compteur++;
     liste[compteur].type = TRESOR; liste[compteur].proprietaire = -1; compteur++;
+    liste[compteur].type = TOTEM; liste[compteur].proprietaire = -1; compteur++;
+    liste[compteur].type = TOTEM; liste[compteur].proprietaire = -1; compteur++;
+    liste[compteur].type = PORTAIL; liste[compteur].proprietaire = -1; compteur++;
 
     // --- 2. ARMES SPÉCIFIQUES (Seulement pour les joueurs présents) ---
     for(i = 0; i < nb_joueur; i++) {
@@ -63,7 +66,7 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
             // Spawn joueurs
             else if ((lig == 0 && col == 3) || (lig == 3 && col == 0) || 
                      (lig == 6 && col == 3) || (lig == 3 && col == 6)) {
-                p.tableau[lig][col].type = PORTAIL; // Laisse ça en PORTAIL ou VIDE, c'est juste le visuel du spawn
+                p.tableau[lig][col].type = DEPART; // Laisse ça en PORTAIL ou VIDE, c'est juste le visuel du spawn
                 p.tableau[lig][col].est_decouverte = 1;
                 p.tableau[lig][col].proprietaire = -1;
             } 
