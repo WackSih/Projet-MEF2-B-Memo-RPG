@@ -12,77 +12,91 @@ Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur ava
 }
 
 int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
-    // Bornes passées à 6 pour le plateau 7x7 (indices 0 à 6)
     if (ligne_new < 0 || ligne_new > 6) {
         return 0; // Sortie tableau
     }
     if (colonne_new < 0 || colonne_new > 6) {
         return 0; // Sortie tableau
     }
-    
-    // Ta condition : on ne peut pas marcher sur une case déjà révélée
     if(tab->tableau[ligne_new][colonne_new].est_decouverte == 1){
         return 0; 
     }
-    
-    return 1; // Le déplacement est autorisé
+    return 1; 
 }
 
-void deplacement(Personnage* x, Plateau* tab){ // Ta fonction originale
+int deplacement(Personnage* x, Plateau* tab) {
     int choixdeplacement;
     int deplacement_valide = 0; 
+
+    // --- 1. VERIFICATION DU BLOCAGE (REGLE CY TECH) ---
+    // On vérifie les 4 directions. Si verifcaselibre renvoie 0 partout, le joueur est bloqué.
+    if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 0 &&
+        verifcaselibre(tab, x->colonne, x->ligne + 1) == 0 &&
+        verifcaselibre(tab, x->colonne + 1, x->ligne) == 0 &&
+        verifcaselibre(tab, x->colonne - 1, x->ligne) == 0) {
+        
+        printf("\n[BLOQUE] %s n'a plus de cases cachees accessibles autour de lui !\n", x->nomJoueur);
+        reset_tableau(x, tab); // Retour à la position initiale
+        return 1; // Signale la fin du tour pour sortir de la boucle de jeu
+    }
+
+    // --- 2. BOUCLE DE DEPLACEMENT ---
     do {
+        // Sous-boucle pour forcer une saisie entre 1 et 4
         do {
-            printf("Ou voulez vous aller ?\n");
-            printf("1 -> Haut\n 2 -> Bas\n 3 -> Droite\n 4 -> Gauche\n");
+            printf("\nOu voulez-vous aller ?\n");
+            printf("1 -> Haut\n2 -> Bas\n3 -> Droite\n4 -> Gauche\n");
+            printf("Choix : ");
             scanf("%d", &choixdeplacement);
+            
             if (choixdeplacement > 4 || choixdeplacement < 1) {
                 printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
             }
         } while(choixdeplacement > 4 || choixdeplacement < 1);
 
+        // Application de la direction choisie
         if (choixdeplacement == 1) { // HAUT
-            // L'Arbitre vérifie si la case d'arrivée (ligne - 1) est valide
             if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 1) {
-                printf("Déplacement valide\n");
                 x->ligne = x->ligne - 1;
-                tab->tableau[x->ligne][x->colonne].est_decouverte = 1;
                 deplacement_valide = 1; 
             } else {
-                printf("Erreur, choisissez un autre deplacement\n");
+                printf("Action impossible : case deja revelee ou hors limites.\n");
             }
         }
         else if (choixdeplacement == 2) { // BAS
             if (verifcaselibre(tab, x->colonne, x->ligne + 1) == 1) {
-                printf("Déplacement valide\n");
                 x->ligne = x->ligne + 1;
-                tab->tableau[x->ligne][x->colonne].est_decouverte = 1;
                 deplacement_valide = 1;
             } else {
-                printf("Erreur, choisissez un autre deplacement\n");
+                printf("Action impossible : case deja revelee ou hors limites.\n");
             }
         }
         else if (choixdeplacement == 3) { // DROITE
             if (verifcaselibre(tab, x->colonne + 1, x->ligne) == 1) {
-                printf("Déplacement valide\n");
                 x->colonne = x->colonne + 1;
-                tab->tableau[x->ligne][x->colonne].est_decouverte = 1;
                 deplacement_valide = 1;
             } else {
-                printf("Erreur, choisissez un autre deplacement\n");
+                printf("Action impossible : case deja revelee ou hors limites.\n");
             }
         }
         else if (choixdeplacement == 4) { // GAUCHE
             if (verifcaselibre(tab, x->colonne - 1, x->ligne) == 1) {
-                printf("Déplacement valide\n");
                 x->colonne = x->colonne - 1;
-                tab->tableau[x->ligne][x->colonne].est_decouverte = 1;
                 deplacement_valide = 1;
             } else {
-                printf("Erreur, choisissez un autre deplacement\n");
+                printf("Action impossible : case deja revelee ou hors limites.\n");
             }
         }
+
+        // Si le déplacement a été validé par verifcaselibre, on révèle la case
+        if (deplacement_valide == 1) {
+            printf("Deplacement valide !\n");
+            tab->tableau[x->ligne][x->colonne].est_decouverte = 1;
+        }
+
     } while (deplacement_valide == 0);
+
+    return 0; // Le joueur a pu bouger normalement
 }
 
 void reset_tableau(Personnage* x, Plateau* tab) {
@@ -184,15 +198,22 @@ int resolution_case(Personnage* x, Plateau* tab){
     if(case_actuelle == TOTEM){
         int colonne, ligne;
         printf("\nVous etes tombe sur un Totem ! La magie va operer...\n");
-        do{
+        // 1. Demander la case cible (doit être cachée)
+        do {
             printf("Entrez la ligne puis la colonne d'une case CACHEE pour l'echanger : ");
             scanf("%d %d", &ligne, &colonne);
-        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1); // <--- CORRECTION 7x7 (6 au lieu de 4)
-        
+            if(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1) {
+                printf("Cible invalide ! Choisissez une case dans le labyrinthe qui n'est pas encore revelee.\n");
+            }
+        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1); 
+        // 2. Échanger les types de cases [cite: 87]
         Type_case temp = tab->tableau[ligne][colonne].type;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[x->ligne][x->colonne].type = temp;
-        printf("Les cases ont ete permutees !\n");
+        printf("Les cases ont ete permutees ! La magie du Totem vous epuise...\n");
+        // 3. Appliquer la règle de fin de tour 
+        reset_tableau(x, tab); 
+        return 1; // Signale la fin du tour (comme une mort) pour sortir de la boucle rejouer
     }
 
     if(case_actuelle == PORTAIL){
@@ -238,6 +259,9 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
             else if (tab->tableau[i][j].type == VIDE) {
                 printf("   |"); // Les coins sont vides
             } 
+            else if (tab->tableau[i][j].est_decouverte == 0) {
+                printf(" ? |"); // Labyrinthe caché
+            }
             else {
                 // Affichage des symboles (D, O, N, A, etc.)
                 Type_case t = tab->tableau[i][j].type;
@@ -261,9 +285,7 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
     int fin_de_partie = 0;
     while(fin_de_partie == 0){
         for(int i = 0; i < nb_joueurs; i++){
-            
             int mort = 0; // Le joueur commence son tour bien vivant
-
             // Tant que le joueur est en vie et que la partie n'est pas finie, il rejoue !
             while(mort == 0 && fin_de_partie == 0) {
                 afficher_plateau(tab, joueur, nb_joueurs);
