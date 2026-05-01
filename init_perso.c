@@ -35,28 +35,26 @@ void depart(Personnage tab_joueurs[], int nb_joueurs) {
  */
 void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
     int choix;
+    int deja_pris[4] = {0, 0, 0, 0}; // 0 = libre, 1 = pris
     for (int i = 0; i < nb_joueurs; i++) {
-        // On demande le choix au moins une fois
-        printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli  : \n", i + 1);
-        scanf("%d", &choix); 
-        printf("\n Joueur %d, quel est votre pseudo ?\n",i+1);
+        do {
+            printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli : ", i + 1);
+            scanf("%d", &choix);
+            if (choix < 1 || choix > 4) {
+                printf("Choix invalide !\n");
+            } else if (deja_pris[choix - 1] == 1) {
+                printf("Ce personnage est deja pris, choisissez-en un autre !\n");
+            }
+        } while (choix < 1 || choix > 4 || deja_pris[choix - 1] == 1);
+        deja_pris[choix - 1] = 1; // On marque comme pris
+        tab_joueurs[i].perso = (Classe)(choix - 1);
+        printf("Joueur %d, quel est votre pseudo ? ", i + 1);
         scanf("%s", tab_joueurs[i].nomJoueur);
-        // On simplifie : on enregistre direct
-        tab_joueurs[i].perso = (Classe)(choix - 1); 
-
-        if (choix == 1) {
-            tab_joueurs[i].arme_a_trouver = BATON;
-        }
-        else if (choix == 2) {
-            tab_joueurs[i].arme_a_trouver = ARC_M;
-        }
-        else if (choix == 3) {
-            tab_joueurs[i].arme_a_trouver = ANNEAU;
-        }
-        else if (choix == 4) {
-            tab_joueurs[i].arme_a_trouver = HACHE;
-        }
-        
-        printf("Joueur %d a choisi %s\n", i + 1, tab_joueurs[i].nomJoueur);
+        // Attribution de l'arme antique (on garde tes noms)
+        if (choix == 1) tab_joueurs[i].arme_a_trouver = BATON;
+        else if (choix == 2) tab_joueurs[i].arme_a_trouver = ARC_M;
+        else if (choix == 3) tab_joueurs[i].arme_a_trouver = ANNEAU;
+        else if (choix == 4) tab_joueurs[i].arme_a_trouver = HACHE;
+        printf("Joueur %d (%s) a choisi la classe %d\n", i + 1, tab_joueurs[i].nomJoueur, choix);
     }
 }
