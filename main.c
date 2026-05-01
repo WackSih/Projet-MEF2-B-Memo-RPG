@@ -1,30 +1,54 @@
 #include "memo_rpg.h"
 
-
-
-// --- Dans main.c ---
 int main() {
     srand(time(NULL));
-    int nb_joueurs = 2; // Ou scanf
-    Personnage joueurs[4];
+    int continuer = 1;
 
-    // 1. On choisit les persos d'abord
-    select_perso(joueurs, nb_joueurs); 
+    while (continuer != 0) {
+        Personnage joueurs[4];
+        int nb_joueurs;
 
-    // 2. On génère le plateau en lui passant le tableau des joueurs
-    Plateau monPlateau = initialisation(joueurs, nb_joueurs);
+        printf("\n=== BIENVENUE DANS MEMO-RPG ===\n");
+        printf("1. Jouer une partie\n");
+        printf("2. Voir le Hall of Fame\n");
+        printf("0. Quitter\n");
+        printf("Votre choix : ");
+        int menu;
+        scanf("%d", &menu);
 
-    // 3. On place les joueurs
-    depart(joueurs, nb_joueurs);
+        if (menu == 0) break;
+        if (menu == 2) {
+            StatJoueur stats[100];
+            int nb = charger_stats(stats, 100);
+            printf("\n--- CLASSEMENT ---\n");
+            for(int i = 0; i < nb; i++) printf("%s : %d victoires\n", stats[i].nom, stats[i].victoires);
+            continue;
+        }
 
-    deroulement_jeu(&monPlateau, joueurs, nb_joueurs);
+        printf("Combien de joueurs (2-4) ? ");
+        scanf("%d", &nb_joueurs);
 
-    // Affichage du classement final
-    StatJoueur stats[100];
-    int nb_stats = charger_stats(stats, 100);
-    printf("\n--- CLASSEMENT ---\n");
-    for(int i = 0; i < nb_stats; i++){
-        printf("%s : %d parties, %d victoires\n", stats[i].nom, stats[i].parties, stats[i].victoires);
+        select_perso(joueurs, nb_joueurs); 
+        Plateau monPlateau = initialisation(joueurs, nb_joueurs); 
+        depart(joueurs, nb_joueurs); 
+
+        time_t debut = time(NULL);
+        deroulement_jeu(&monPlateau, joueurs, nb_joueurs); 
+        time_t fin = time(NULL);
+
+        printf("\n--- LA PARTIE EST FINIE (Duree : %ld secondes) ---\n", fin - debut);
+        for(int i = 0; i < TAILLE; i++) {
+            for(int j = 0; j < TAILLE; j++) {
+                monPlateau.tableau[i][j].est_decouverte = 1;
+            }
+        }
+        afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
+
+        printf("\nQue voulez-vous faire ?\n");
+        printf("1. Revenir au menu principal\n");
+        printf("0. Quitter le programme\n");
+        printf("Choix : ");
+        scanf("%d", &continuer);
     }
     return 0;
 }
