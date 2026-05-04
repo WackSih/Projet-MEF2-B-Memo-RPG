@@ -7,7 +7,7 @@ int main() {
     while (continuer != 0) {
         Personnage joueurs[4];
         int nb_joueurs;
-
+        do{
         printf("\n=== BIENVENUE DANS MEMO-RPG ===\n");
         printf("1. Jouer une partie\n");
         printf("2. Voir le Hall of Fame\n");
@@ -15,7 +15,9 @@ int main() {
         printf("Votre choix : ");
         int menu;
         scanf("%d", &menu);
-
+        if(menu<0 || menu > 2){
+            printf("Erreur, veuillez selectionner a nouveau.\n");
+        }while (menu<0 || menu > 2);
         if (menu == 0) break;
         if (menu == 2) {
             StatJoueur stats[100];
