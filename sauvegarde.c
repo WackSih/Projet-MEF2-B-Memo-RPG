@@ -1,6 +1,6 @@
 #include "memo_rpg.h"
 
-int charger_stats(StatJoueur tableau[],int max_joueurs) {//on aura besoin d'un nombre maximum de joueur à enregistrer dans le fichier 
+int charger_stats(StatJoueur tableau[],int max_joueurs) {
     FILE *fichier =NULL;
     fichier=fopen("stats.txt", "r");
 
@@ -11,7 +11,7 @@ int charger_stats(StatJoueur tableau[],int max_joueurs) {//on aura besoin d'un n
     }
 
     int i = 0;
-    //permet de remplir le tableau avec les donnée enregistrée du fichier
+    
     while (i < max_joueurs && fscanf(fichier, "%s %d %d", tableau[i].nom, &tableau[i].parties, &tableau[i].victoires) == 3) {
         i++;
     }
@@ -29,7 +29,7 @@ int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
     fichier=fopen("stats.txt","w");
     if(fichier==NULL){
         printf("erreur lors de l'ouverture du fichier\n");
-        return 0;//0 -> erreur de l'enregistrement
+        return 0;// 0 -> erreur de l'enregistrement
     }
 
     for (int i = 0; i < nb_joueurs; i++) {
