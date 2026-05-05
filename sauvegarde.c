@@ -37,7 +37,7 @@ int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
     }
 
     fclose(fichier);
-    printf("Statistiques sauvegardées avec succès.\n");
+    
     return 1; // enregistrement effectué
 }
 
