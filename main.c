@@ -17,6 +17,7 @@ int main() {
         scanf("%d", &menu);
         if(menu<0 || menu > 2){
             printf("Erreur, veuillez selectionner a nouveau.\n");
+        }
         }while (menu<0 || menu > 2);
         if (menu == 0) break;
         if (menu == 2) {
