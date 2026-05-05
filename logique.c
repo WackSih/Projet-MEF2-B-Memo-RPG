@@ -27,22 +27,13 @@ int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
 int deplacement(Personnage* x, Plateau* tab) {
     int choixdeplacement;
     int deplacement_valide = 0; 
-
-    // --- 1. VERIFICATION DU BLOCAGE (REGLE CY TECH) ---
     // On vérifie les 4 directions. Si verifcaselibre renvoie 0 partout, le joueur est bloqué.
-    if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 0 &&
-        verifcaselibre(tab, x->colonne, x->ligne + 1) == 0 &&
-        verifcaselibre(tab, x->colonne + 1, x->ligne) == 0 &&
-        verifcaselibre(tab, x->colonne - 1, x->ligne) == 0) {
-        
+    if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 0 && verifcaselibre(tab, x->colonne, x->ligne + 1) == 0 && verifcaselibre(tab, x->colonne + 1, x->ligne) == 0 && verifcaselibre(tab, x->colonne - 1, x->ligne) == 0) {
         printf("\n[BLOQUE] %s n'a plus de cases cachees accessibles autour de lui !\n", x->nomJoueur);
         reset_tableau(x, tab); // Retour à la position initiale
         return 1; // Signale la fin du tour pour sortir de la boucle de jeu
     }
-
-    // --- 2. BOUCLE DE DEPLACEMENT ---
     do {
-        // Sous-boucle pour forcer une saisie entre 1 et 4
         do {
             printf("\nOu voulez-vous aller ?\n");
             printf("1 -> Haut\n2 -> Bas\n3 -> Droite\n4 -> Gauche\n");
@@ -53,7 +44,7 @@ int deplacement(Personnage* x, Plateau* tab) {
                 printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
             }
         } while(choixdeplacement > 4 || choixdeplacement < 1);
-
+        
         // Application de la direction choisie
         if (choixdeplacement == 1) { // HAUT
             if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 1) {
@@ -100,7 +91,7 @@ int deplacement(Personnage* x, Plateau* tab) {
 }
 
 void reset_tableau(Personnage* x, Plateau* tab) {
-    // 1. On cache uniquement le labyrinthe central (indices 1 à 5)
+    // On cache le labyrinthe central 
     for (int i = 0; i < TAILLE; i++) { 
         for (int j = 0; j < TAILLE; j++) { 
             // Si on n'est PAS sur une des 4 cases de spawn, on cache
@@ -111,7 +102,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
             }
         }
     }
-    // 2. Positions exactes sur la croix (indices 0, 3, 6)
+    // 2. Positions exactes sous forme de croix 
     if (x->perso == GANDALF) {
         x->ligne = 0; x->colonne = 3;
     }
@@ -133,8 +124,6 @@ void reset_tableau(Personnage* x, Plateau* tab) {
 int resolution_case(Personnage* x, Plateau* tab){ 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0; // Variable pour retenir si on meurt dans un portail
-
-    // --- MONSTRES ---
     // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
     if(case_actuelle == DRAGON){
         printf("\nUn DRAGON bloque la route ! Preparez-vous au combat.\n");
@@ -143,7 +132,7 @@ int resolution_case(Personnage* x, Plateau* tab){
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le DRAGON vous a battu...\n");
             reset_tableau(x,tab);
-            return 1; // <--- AJOUT : On signale la mort
+            return 1; // On signale la mort
         }
     }
     if(case_actuelle == ORC){
@@ -175,9 +164,6 @@ int resolution_case(Personnage* x, Plateau* tab){
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
-    }
-
-    // --- OBJETS ET ARMES SPECIALES ---
     // Ici on garde ta logique de vérification par personnage
     if(case_actuelle == ARME_SPE){
         // On utilise le propriétaire défini à l'initialisation (0=Gandalf, 1=Tauriel, etc.)
@@ -188,13 +174,10 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("\nVous trouvez une arme au sol... mais ce n'est pas la votre.\n");
         }
     }
-
     if(case_actuelle == TRESOR){
         printf("\nINCROYABLE ! %s, vous avez trouve le Tresor !\n", x->nomJoueur);
         x->aLeTresor = 1;
     }
-
-    // --- CASES SPECIALES ---
     if(case_actuelle == TOTEM){
         int colonne, ligne;
         printf("\nVous etes tombe sur un Totem ! La magie va operer...\n");
@@ -211,39 +194,33 @@ int resolution_case(Personnage* x, Plateau* tab){
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[x->ligne][x->colonne].type = temp;
         printf("Les cases ont ete permutees ! La magie du Totem vous epuise...\n");
-        // 3. Appliquer la règle de fin de tour 
         reset_tableau(x, tab); 
         return 1; // Signale la fin du tour (comme une mort) pour sortir de la boucle rejouer
     }
-
     if(case_actuelle == PORTAIL){
         int colonne, ligne;
         printf("\nUn portail de teleportation ! Ou voulez-vous apparaitre ?\n");
         do{
             printf("Entrez la ligne puis la colonne : ");
             scanf("%d %d", &ligne, &colonne);
-        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6); // <--- CORRECTION 7x7 (6 au lieu de 4)
-        
+        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6); // 
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
         printf("Vouuuuh ! Teleportation en [%d][%d] !\n", ligne, colonne);
-        mort = resolution_case(x, tab); // <--- AJOUT : On récupère la mort potentielle dans le portail
+        mort = resolution_case(x, tab); // ca renvoit 1 si le mec est mort ou 0 si il a reussit
         return mort; 
     }
 
-    return 0; // <--- AJOUT : Si le code arrive ici, c'est que le joueur a survécu !
+    return 0; // Reussit
 }
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
-    
-    // On affiche les indices de 0 à 6
     printf("    0   1   2   3   4   5   6\n");
     printf("  +---+---+---+---+---+---+---+\n");
-
     for (int i = 0; i < TAILLE; i++) {
-        printf("%d |", i); 
+        printf("%d |", i); //print les colonnes
         for (int j = 0; j < TAILLE; j++) {
             int joueur_present = -1;
             for (int k = 0; k < nb_joueurs; k++) {
@@ -252,7 +229,6 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                     break;
                 }
             }
-
             if (joueur_present != -1) {
                 printf(" J%d|", joueur_present + 1);
             } 
@@ -263,7 +239,6 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 printf(" ? |"); // Labyrinthe caché
             }
             else {
-                // Affichage des symboles (D, O, N, A, etc.)
                 Type_case t = tab->tableau[i][j].type;
                 if (t == DRAGON) printf(" D |");
                 else if (t == ORC) printf(" O |");
