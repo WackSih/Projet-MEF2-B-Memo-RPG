@@ -117,7 +117,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
     }
     x->aLarme = 0;
     x->aLeTresor = 0;
-    mettre_a_jour_stats(x->nomJoueur, 0); // 0 = défaite
+    
     printf("\n[DEFAITE] Le labyrinthe se referme... %s revient au point de depart !\n", x->nomJoueur);
 }
 
@@ -131,6 +131,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre ARC !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le DRAGON vous a battu...\n");
+            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // On signale la mort
         }
@@ -141,6 +142,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre EPEE !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ORC vous a battu...\n");
+            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
@@ -151,6 +153,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre BOULE DE FEU !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le NAZGUL vous a battu...\n");
+            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
@@ -161,6 +164,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre LANCE !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ARAIGNEE vous a battu...\n");
+            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
