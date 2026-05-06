@@ -207,7 +207,7 @@ int resolution_case(Personnage* x, Plateau* tab){
         do{
             printf("Entrez la ligne puis la colonne : ");
             scanf("%d %d", &ligne, &colonne);
-        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6); // 
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5); // 
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
