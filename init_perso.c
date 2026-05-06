@@ -10,7 +10,7 @@ void depart(Personnage tab_joueurs[], int nb_joueurs) {
             tab_joueurs[i].ligne = 0;       //En Haut
             tab_joueurs[i].colonne = 3;     //Au milieu
         }
-        else if (tab_joueurs[i].perso == TAURIEL) { //(Est/
+        else if (tab_joueurs[i].perso == TAURIEL) { //(Est)
             tab_joueurs[i].ligne = 3;       //Au Centre
             tab_joueurs[i].colonne = 6;     //A Droite
         }
@@ -28,7 +28,7 @@ void depart(Personnage tab_joueurs[], int nb_joueurs) {
 
 void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
     int choix;
-    int deja_pris[4] = {0, 0, 0, 0}; // 0 = libre, 1 = pris
+    int deja_pris[4] = {0, 0, 0, 0};     // 0 = libre, 1 = pris
     for (int i = 0; i < nb_joueurs; i++) {
         do {
             printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli \n: ", i + 1);
@@ -43,7 +43,9 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
         tab_joueurs[i].perso = (Classe)(choix - 1);
         printf("Joueur %d, quel est votre pseudo ? ", i + 1);
         scanf("%s", tab_joueurs[i].nomJoueur);
-        // Attribution de l'arme antique (on garde tes noms)
+        
+        // Attribution de l'arme perso (on garde tes noms)
+        
         if (choix == 1) tab_joueurs[i].arme_a_trouver = BATON;
         else if (choix == 2) tab_joueurs[i].arme_a_trouver = ARC_M;
         else if (choix == 3) tab_joueurs[i].arme_a_trouver = ANNEAU;
