@@ -218,6 +218,7 @@ int resolution_case(Personnage* x, Plateau* tab){
 
     return 0; // Reussit
 }
+}
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
