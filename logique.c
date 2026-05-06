@@ -218,6 +218,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             scanf("%d %d", &ligne, &colonne);
             if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5){
                 printf("Erreur, case en dehors du plateau de jeu\n");
+            }
         } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5); // 
         x->ligne = ligne;
         x->colonne = colonne;
@@ -225,10 +226,10 @@ int resolution_case(Personnage* x, Plateau* tab){
         printf("Vouuuuh ! Teleportation en [%d][%d] !\n", ligne, colonne);
         mort = resolution_case(x, tab); // ca renvoit 1 si le mec est mort ou 0 si il a reussit
         return mort; 
-    }
+        }
     return 0; // Reussit
-}
-}
+    }
+
 
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
