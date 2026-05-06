@@ -51,3 +51,4 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
         printf("Joueur %d (%s) a choisi la classe %d\n", i + 1, tab_joueurs[i].nomJoueur, choix);
     }
 }
+
