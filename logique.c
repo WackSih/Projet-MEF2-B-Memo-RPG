@@ -216,6 +216,8 @@ int resolution_case(Personnage* x, Plateau* tab){
         do{
             printf("Entrez la ligne puis la colonne : ");
             scanf("%d %d", &ligne, &colonne);
+            if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5){
+                printf("Erreur, case en dehors du plateau de jeu\n");
         } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5); // 
         x->ligne = ligne;
         x->colonne = colonne;
