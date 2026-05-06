@@ -1,3 +1,4 @@
+#ifndef MEMO_RPG_H
 #define MEMO_RPG_H
 
 #include <stdlib.h>
@@ -57,3 +58,4 @@ int charger_stats(StatJoueur tableau[], int max_joueurs);
 int sauvegarder_stats(StatJoueur tableau[], int nb_joueurs);
 void mettre_a_jour_stats(const char* nom, int a_gagne);
 
+#endif
