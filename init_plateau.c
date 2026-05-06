@@ -82,3 +82,4 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
     }
     return p;
 }
+
