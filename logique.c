@@ -124,6 +124,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
 int resolution_case(Personnage* x, Plateau* tab){ 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0; // Variable pour retenir si on meurt dans un portail
+    
     // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
     if(case_actuelle == DRAGON){
         printf("\nUn DRAGON bloque la route ! Preparez-vous au combat.\n");
@@ -136,6 +137,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             return 1; // On signale la mort
         }
     }
+    
     if(case_actuelle == ORC){
         printf("\nUn ORC surgit des ombres ! Preparez-vous au combat.\n");
         if(x->arme_actuelle == EPEE){
@@ -147,6 +149,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             return 1; // <--- AJOUT : On signale la mort
         }
     }
+    
     if(case_actuelle == NAZGUL){
         printf("\nUn NAZGUL fond sur vous ! Preparez-vous au combat.\n");
         if(x->arme_actuelle == BDF){
@@ -158,6 +161,7 @@ int resolution_case(Personnage* x, Plateau* tab){
             return 1; // <--- AJOUT : On signale la mort
         }
     }
+    
     if(case_actuelle == ARAIGNEE){
         printf("\nUne ARAIGNEE GEANTE vous barre le chemin ! Preparez-vous au combat.\n");
         if(x->arme_actuelle == LANCE){
@@ -168,6 +172,8 @@ int resolution_case(Personnage* x, Plateau* tab){
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
+    }
+    
     // Ici on garde ta logique de vérification par personnage
     if(case_actuelle == ARME_SPE){
         // On utilise le propriétaire défini à l'initialisation (0=Gandalf, 1=Tauriel, etc.)
@@ -178,10 +184,12 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("\nVous trouvez une arme au sol... mais ce n'est pas la votre.\n");
         }
     }
+    
     if(case_actuelle == TRESOR){
         printf("\nINCROYABLE ! %s, vous avez trouve le Tresor !\n", x->nomJoueur);
         x->aLeTresor = 1;
     }
+    
     if(case_actuelle == TOTEM){
         int colonne, ligne;
         printf("\nVous etes tombe sur un Totem ! La magie va operer...\n");
@@ -201,6 +209,7 @@ int resolution_case(Personnage* x, Plateau* tab){
         reset_tableau(x, tab); 
         return 1; // Signale la fin du tour (comme une mort) pour sortir de la boucle rejouer
     }
+    
     if(case_actuelle == PORTAIL){
         int colonne, ligne;
         printf("\nUn portail de teleportation ! Ou voulez-vous apparaitre ?\n");
@@ -218,7 +227,7 @@ int resolution_case(Personnage* x, Plateau* tab){
 
     return 0; // Reussit
 }
-}
+
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
