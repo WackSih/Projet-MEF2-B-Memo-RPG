@@ -125,7 +125,7 @@ int resolution_case(Personnage* x, Plateau* tab){
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0; // Variable pour retenir si on meurt dans un portail
     
-    // On vérifie le type de case, on annonce le monstre, et SEULEMENT là on demande l'arme
+    // On vérifie le type de case et on regarde si le joeuur a la bonne arme 
     if(case_actuelle == DRAGON){
         printf("\nUn DRAGON bloque la route ! Preparez-vous au combat.\n");
         if(x->arme_actuelle == ARC){
