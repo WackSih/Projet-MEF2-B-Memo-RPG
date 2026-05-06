@@ -9,7 +9,7 @@ int main() {
         int nb_joueurs;
         int menu;
         do{
-        printf("\n=== BIENVENUE DANS MEMO-RPG ===\n");
+        printf("\n=== BIENVENUE DANS MEMO-RPG ===\n"); //MENU D'ACCEUIL
         printf("1. Jouer une partie\n");
         printf("2. Voir le Hall of Fame\n");
         printf("0. Quitter\n");
@@ -32,7 +32,7 @@ int main() {
         scanf("%d", &nb_joueurs);
 
         select_perso(joueurs, nb_joueurs); 
-        while(rejouer==1){
+        while(rejouer==1){ //DEBUT DE LA BOUCLE AVEC LES JOUEURS ET PERSOS CHOISIS
             Plateau monPlateau = initialisation(joueurs, nb_joueurs); 
             depart(joueurs, nb_joueurs); 
     
@@ -48,12 +48,12 @@ int main() {
             }
             afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
 
-            printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n");
+            printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n"); //MENU POUR REJOUER
             printf("Choix : ");
             scanf("%d", &rejouer);
-        }
+        } // FIN DE LA PARTIE AVEC CES JOUEURS
 
-        printf("\nQue voulez-vous faire ?\n");
+        printf("\nQue voulez-vous faire ?\n");    //MENU DE FIN
         printf("1. Revenir au menu principal\n");
         printf("0. Quitter le programme\n");
         printf("Choix : ");
