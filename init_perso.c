@@ -1,38 +1,31 @@
 #include "memo_rpg.h"
 
-/**
- * Initialise la position de départ des joueurs sur la bordure du plateau 6x6.
- * Les joueurs commencent sur des cases neutres pour éviter les monstres au spawn.
- */
 void depart(Personnage tab_joueurs[], int nb_joueurs) { 
     for (int i = 0; i < nb_joueurs; i++) {
         // Initialisation de base
         tab_joueurs[i].aLarme = 0;
         tab_joueurs[i].aLeTresor = 0;
         tab_joueurs[i].arme_actuelle = EPEE;
-        if (tab_joueurs[i].perso == GANDALF) {
-            tab_joueurs[i].ligne = 0; 
-            tab_joueurs[i].colonne = 3;
+        if (tab_joueurs[i].perso == GANDALF) { //(Nord)
+            tab_joueurs[i].ligne = 0;       //En Haut
+            tab_joueurs[i].colonne = 3;     //Au milieu
         }
-        else if (tab_joueurs[i].perso == TAURIEL) {
-            tab_joueurs[i].ligne = 3;
-            tab_joueurs[i].colonne = 6;
+        else if (tab_joueurs[i].perso == TAURIEL) { //(Est/
+            tab_joueurs[i].ligne = 3;       //Au Centre
+            tab_joueurs[i].colonne = 6;     //A Droite
         }
-        else if (tab_joueurs[i].perso == GOLLUM) {
-            tab_joueurs[i].ligne = 3;
-            tab_joueurs[i].colonne = 0;
+        else if (tab_joueurs[i].perso == GOLLUM) { //(Ouest)
+            tab_joueurs[i].ligne = 3;       //Au Centre
+            tab_joueurs[i].colonne = 0;     //A Gauche
         }
-        else if (tab_joueurs[i].perso == GIMLI) {
-            tab_joueurs[i].ligne = 6;
-            tab_joueurs[i].colonne = 3;
+        else if (tab_joueurs[i].perso == GIMLI) { //(Sud)
+            tab_joueurs[i].ligne = 6;       //En Bas
+            tab_joueurs[i].colonne = 3;     //Au Milieu
         }
     }
 }
 
-/**
- * Permet à chaque joueur de choisir un personnage unique.
- * Gère la duplication pour qu'un personnage ne soit pas choisi deux fois.
- */
+
 void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
     int choix;
     int deja_pris[4] = {0, 0, 0, 0}; // 0 = libre, 1 = pris
