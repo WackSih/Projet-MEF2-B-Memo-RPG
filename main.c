@@ -3,7 +3,7 @@
 int main() {
     srand(time(NULL));
     int continuer = 1;
-
+    int rejouer = 1;
     while (continuer != 0) {
         Personnage joueurs[4];
         int nb_joueurs;
@@ -32,20 +32,25 @@ int main() {
         scanf("%d", &nb_joueurs);
 
         select_perso(joueurs, nb_joueurs); 
-        Plateau monPlateau = initialisation(joueurs, nb_joueurs); 
-        depart(joueurs, nb_joueurs); 
-
-        time_t debut = time(NULL);
-        deroulement_jeu(&monPlateau, joueurs, nb_joueurs); 
-        time_t fin = time(NULL);
-
-        printf("\n--- LA PARTIE EST FINIE (Duree : %ld secondes) ---\n", fin - debut);
-        for(int i = 0; i < TAILLE; i++) {
-            for(int j = 0; j < TAILLE; j++) {
-                monPlateau.tableau[i][j].est_decouverte = 1;
+        while(rejouer==1){
+            Plateau monPlateau = initialisation(joueurs, nb_joueurs); 
+            depart(joueurs, nb_joueurs); 
+    
+            time_t debut = time(NULL);
+            deroulement_jeu(&monPlateau, joueurs, nb_joueurs); 
+            time_t fin = time(NULL);
+    
+            printf("\n--- LA PARTIE EST FINIE (Duree : %ld secondes) ---\n", fin - debut);
+            for(int i = 0; i < TAILLE; i++) {
+                for(int j = 0; j < TAILLE; j++) {
+                    monPlateau.tableau[i][j].est_decouverte = 1;
+                }
             }
+            afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
+
+            printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n");
+            scanf("%d", &rejouer);
         }
-        afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
 
         printf("\nQue voulez-vous faire ?\n");
         printf("1. Revenir au menu principal\n");
