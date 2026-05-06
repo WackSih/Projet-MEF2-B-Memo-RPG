@@ -5,7 +5,7 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
     Case liste[25]; 
     int i, compteur = 0;
 
-    // --- 1. OBJETS FIXES ET MONSTRES DE BASE (18 cases) ---
+    // OBJETS FIXES ET MONSTRES DE BASE (18 cases)
     for(i = 0; i < 4; i++) { liste[compteur].type = DRAGON; liste[compteur].proprietaire = -1; compteur++; }
     for(i = 0; i < 4; i++) { liste[compteur].type = ORC; liste[compteur].proprietaire = -1; compteur++; }
     for(i = 0; i < 4; i++) { liste[compteur].type = NAZGUL; liste[compteur].proprietaire = -1; compteur++; }
@@ -16,7 +16,7 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
     liste[compteur].type = TOTEM; liste[compteur].proprietaire = -1; compteur++;
     liste[compteur].type = PORTAIL; liste[compteur].proprietaire = -1; compteur++;
 
-    // --- 2. ARMES SPÉCIFIQUES (Seulement pour les joueurs présents) ---
+    //ARMES SPÉCIFIQUES (Seulement pour les joueurs présents)
     for(i = 0; i < nb_joueur; i++) {
         liste[compteur].type = ARME_SPE;
         if (tab_joueurs[i].perso == GANDALF) {
@@ -34,7 +34,7 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
         compteur++;
     }
 
-    // --- 3. REMPLISSAGE DU RESTE AVEC DES MONSTRES ---
+    // REMPLISSAGE DU RESTE AVEC DES MONSTRES
     // S'il manque des cases pour arriver à 25 (ex: partie à 2 ou 3 joueurs)
     while(compteur < 25) {
         int monstre_aleatoire = rand() % 4; // Tire un chiffre entre 0 et 3
@@ -47,8 +47,10 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
         compteur++;
     }
 
-    // --- 4. MÉLANGE ET PLACEMENT 7x7 ---
-    for(i = 0; i < 25; i++) liste[i].est_decouverte = 0;
+    // Mélange Parfait
+    for(i = 0; i < 25; i++){
+        liste[i].est_decouverte = 0;
+    }
     for(i = 24; i > 0; i--) {
         int j = rand() % (i + 1);
         Case temp = liste[i];
