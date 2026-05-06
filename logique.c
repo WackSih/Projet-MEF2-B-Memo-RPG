@@ -197,10 +197,10 @@ int resolution_case(Personnage* x, Plateau* tab){
         do {
             printf("Entrez la ligne puis la colonne d'une case CACHEE pour l'echanger : ");
             scanf("%d %d", &ligne, &colonne);
-            if(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1) {
+            if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1) {
                 printf("Cible invalide ! Choisissez une case dans le labyrinthe qui n'est pas encore revelee.\n");
             }
-        } while(ligne < 0 || ligne > 6 || colonne < 0 || colonne > 6 || tab->tableau[ligne][colonne].est_decouverte == 1); 
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1); 
         // 2. Échanger les types de cases [cite: 87]
         Type_case temp = tab->tableau[ligne][colonne].type;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
