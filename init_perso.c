@@ -31,7 +31,7 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
     int deja_pris[4] = {0, 0, 0, 0}; // 0 = libre, 1 = pris
     for (int i = 0; i < nb_joueurs; i++) {
         do {
-            printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli : ", i + 1);
+            printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli \n: ", i + 1);
             scanf("%d", &choix);
             if (choix < 1 || choix > 4) {
                 printf("Choix invalide !\n");
