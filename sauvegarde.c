@@ -69,3 +69,4 @@ void mettre_a_jour_stats(const char* nom, int a_gagne) {
 
     sauvegarder_stats(tableau, nb);
 }
+
