@@ -12,10 +12,10 @@ Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur ava
 }
 
 int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
-    if (ligne_new < 0 || ligne_new > 6) {
+    if (ligne_new < 1 || ligne_new > 5) {
         return 0; // Sortie tableau
     }
-    if (colonne_new < 0 || colonne_new > 6) {
+    if (colonne_new < 1 || colonne_new > 5) {
         return 0; // Sortie tableau
     }
     if(tab->tableau[ligne_new][colonne_new].est_decouverte == 1){
