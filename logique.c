@@ -226,8 +226,8 @@ int resolution_case(Personnage* x, Plateau* tab){
         mort = resolution_case(x, tab); // ca renvoit 1 si le mec est mort ou 0 si il a reussit
         return mort; 
     }
-
     return 0; // Reussit
+}
 }
 
 
