@@ -49,6 +49,7 @@ int main() {
             afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
 
             printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n");
+            printf("Choix : ");
             scanf("%d", &rejouer);
         }
 
