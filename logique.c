@@ -240,9 +240,6 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
             else if (tab->tableau[i][j].type == VIDE) {
                 printf("   |"); // Les coins sont vides
             } 
-            else if (tab->tableau[i][j].est_decouverte == 0) {
-                printf(" ? |"); // Labyrinthe caché
-            }
             else {
                 Type_case t = tab->tableau[i][j].type;
                 if (t == DRAGON) printf(" D |");
