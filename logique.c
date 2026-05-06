@@ -285,7 +285,7 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
                     fin_de_partie = 1;
                 }
             }
-            // Quand "mort" passe à 1, la boucle s'arrête et on passe au joueur suivant (le "for")
+            // Quand "mort" passe à 1, la boucle s'arrête et on passe au joueur suivant
         }
     }
 }
