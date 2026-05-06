@@ -47,7 +47,7 @@ Plateau initialisation(Personnage tab_joueurs[], int nb_joueur) {
         compteur++;
     }
 
-    // Mélange Parfait
+    // Mélange Parfait Fisher-Yates
     for(i = 0; i < 25; i++){
         liste[i].est_decouverte = 0;
     }
