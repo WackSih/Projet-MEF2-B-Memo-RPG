@@ -4,7 +4,7 @@ Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur ava
     int armechoisie;
     do {
     printf("Quelle arme choississez vous ?\n");
-    printf("1 -> ARC\n 2 -> EPEE\n 3 -> BDF\n 4 -> LANCE\n");
+    printf("1 -> ARC\n2 -> EPEE\n3 -> BDF\n4 -> LANCE\n");
     scanf("%d",&armechoisie);
     }while(armechoisie<1 || armechoisie>4);
     x->arme_actuelle = armechoisie - 1;
