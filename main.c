@@ -24,7 +24,16 @@ int main() {
             StatJoueur stats[100];
             int nb = charger_stats(stats, 100);
             printf("\n--- CLASSEMENT ---\n");
-            for(int i = 0; i < nb; i++) printf("%s : %d victoires\n", stats[i].nom, stats[i].victoires);
+            printf("%-20s %8s %9s %8s %6s\n", "Joueur", "Parties", "Victoires", "Defaites", "Morts");
+            printf("------------------------------------------------------------\n");
+            for (int i = 0; i < nb; i++) {
+                printf("%-20s %8d %9d %8d %6d\n",
+                    stats[i].nom,
+                    stats[i].parties,
+                    stats[i].victoires,
+                    stats[i].defaites,
+                    stats[i].nmb_mort);
+            }
             continue;
         }
 
