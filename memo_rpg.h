@@ -41,6 +41,8 @@ typedef struct {
     char nom[50];
     int parties;
     int victoires;
+    int defaites;
+    int nmb_mort;
 } StatJoueur;
 
 // Prototypes (Indispensables pour lier les fichiers)
@@ -56,6 +58,6 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs);
 void reset_tableau(Personnage* x, Plateau* tab);
 int charger_stats(StatJoueur tableau[], int max_joueurs);
 int sauvegarder_stats(StatJoueur tableau[], int nb_joueurs);
-void mettre_a_jour_stats(const char* nom, int a_gagne);
+void mettre_a_jour_stats(const char* nom, int a_gagne, int a_perdu, int nb_morts_tour);
 
 #endif
