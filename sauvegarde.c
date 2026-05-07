@@ -12,7 +12,7 @@ int charger_stats(StatJoueur tableau[],int max_joueurs) {
 
     int i = 0;
     
-    while (i < max_joueurs && fscanf(fichier, "%s %d %d", tableau[i].nom, &tableau[i].parties, &tableau[i].victoires) == 3) {
+    while (i < max_joueurs && fscanf(fichier, "%s %d %d %d %d", tableau[i].nom,&tableau[i].parties,&tableau[i].victoires,&tableau[i].defaites,&tableau[i].nmb_mort) == 5) {
         i++;
     }
     fclose(fichier);
@@ -33,7 +33,7 @@ int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
     }
 
     for (int i = 0; i < nb_joueurs; i++) {
-        fprintf(fichier, "%s %d %d\n", tableau[i].nom, tableau[i].parties, tableau[i].victoires);
+        fprintf(fichier, "%s %d %d %d %d\n",tableau[i].nom,tableau[i].parties,tableau[i].victoires,tableau[i].defaites,tableau[i].nmb_mort);
     }
 
     fclose(fichier);
@@ -41,8 +41,10 @@ int sauvegarder_stats(StatJoueur tableau[],int nb_joueurs){
     return 1; // enregistrement effectué
 }
 
-
-void mettre_a_jour_stats(const char* nom, int a_gagne) {
+// a_gagne  : 1 si ce joueur a gagné la partie, sinon 0
+// a_perdu  : 1 si la partie est finie et qu'un autre a gagné, sinon 0
+// morts    : nombre de fois que ce joueur est mort contre un monstre CE tour
+void mettre_a_jour_stats(const char* nom, int a_gagne, int a_perdu, int morts) {
     StatJoueur tableau[100];
     int nb = charger_stats(tableau, 100);
 
@@ -56,17 +58,20 @@ void mettre_a_jour_stats(const char* nom, int a_gagne) {
     }
 
     if (trouve == -1) {
-        // Nouveau joueur : on l'ajoute
-        strncpy(tableau[nb].nom, nom,49);
-        tableau[nb].parties = 1;
+        // Nouveau joueur
+        strncpy(tableau[nb].nom, nom, 49);
+        tableau[nb].nom[49] = '\0';//ajout manuelle de \0 car strcpy ne le fait pas automatiquement
+        tableau[nb].parties  = 1;
         tableau[nb].victoires = a_gagne;
+        tableau[nb].defaites  = a_perdu;
+        tableau[nb].nmb_mort  = morts;
         nb++;
     } else {
-        // Joueur existant : on met à jour
         tableau[trouve].parties++;
         tableau[trouve].victoires += a_gagne;
+        tableau[trouve].defaites  += a_perdu;
+        tableau[trouve].nmb_mort  += morts;
     }
 
     sauvegarder_stats(tableau, nb);
 }
-
