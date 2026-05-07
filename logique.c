@@ -132,7 +132,6 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre ARC !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le DRAGON vous a battu...\n");
-            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // On signale la mort
         }
@@ -144,7 +143,6 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre EPEE !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ORC vous a battu...\n");
-            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
@@ -156,7 +154,6 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre BOULE DE FEU !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, le NAZGUL vous a battu...\n");
-            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
@@ -168,7 +165,6 @@ int resolution_case(Personnage* x, Plateau* tab){
             printf("SUCCESS : Le monstre est vaincu par votre LANCE !\n");
         }else{
             printf("DEFAITE : Vous aviez la mauvaise arme, l'ARAIGNEE vous a battu...\n");
-            mettre_a_jour_stats(x->nomJoueur, 0);
             reset_tableau(x,tab);
             return 1; // <--- AJOUT : On signale la mort
         }
@@ -272,6 +268,8 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
 
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
+    int morts_partie[4] = {0, 0, 0, 0};
+
     while(fin_de_partie == 0){
         for(int i = 0; i < nb_joueurs; i++){
             int mort = 0; // Le joueur commence son tour bien vivant
@@ -287,17 +285,29 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
                 
                 // On récupère 1 si mort, 0 si vivant
                 mort = resolution_case(&joueur[i], tab);
+
+                if (mort == 1) {
+                    morts_partie[i]++; 
+                }
                 
                 if(joueur[i].aLeTresor == 1 && joueur[i].aLarme == 1){
                     printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueur[i].nomJoueur);
-                    mettre_a_jour_stats(joueur[i].nomJoueur, 1); // 1 = victoire
+                    //vainqueur
+                    mettre_a_jour_stats(joueur[i].nomJoueur, 1, 0, morts_partie[i]);
+
+                    //perdant
+                    for (int k = 0; k < nb_joueurs; k++) {
+                        if (k != i) {
+                            mettre_a_jour_stats(joueur[k].nomJoueur, 0, 1, morts_partie[k]);
+                        }
+                    }
                     fin_de_partie = 1;
+                    break;
                 }
             }
             // Quand "mort" passe à 1, la boucle s'arrête et on passe au joueur suivant
         }
     }
 }
-
 
 
