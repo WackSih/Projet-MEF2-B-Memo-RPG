@@ -1,5 +1,10 @@
 #include "memo_rpg.h"
 
+void vide_buffer(){
+    while(getchar()!='\n'){
+    }
+}
+
 int main() {
     srand(time(NULL));
     int continuer = 1;
@@ -8,17 +13,19 @@ int main() {
         Personnage joueurs[4];
         int nb_joueurs;
         int menu;
+        int verif;
         do{
-        printf("\n=== BIENVENUE DANS MEMO-RPG ===\n"); //MENU D'ACCEUIL
-        printf("1. Jouer une partie\n");
-        printf("2. Voir le Hall of Fame\n");
-        printf("0. Quitter\n");
-        printf("Votre choix : ");
-        scanf("%d", &menu);
-        if(menu<0 || menu > 2){
-            printf("Erreur, veuillez selectionner a nouveau.\n");
-        }
-        }while (menu<0 || menu > 2);
+            printf("\n=== BIENVENUE DANS MEMO-RPG ===\n"); //MENU D'ACCEUIL
+            printf("1. Jouer une partie\n");
+            printf("2. Voir le Hall of Fame\n");
+            printf("0. Quitter\n");
+            printf("Votre choix : ");
+            verif=scanf("%d", &menu);
+            vide_buffer();
+            if(menu<0 || menu > 2){
+                printf("Erreur, veuillez selectionner a nouveau.\n");
+            }
+        }while (menu<0 || menu > 2 || verif!=1 );//toujours un problème --> si on écrit nimp  pas de message d'erreur mais redemande quand même à l'utilisateur de re saisir
         if (menu == 0) break;
         if (menu == 2) {
             StatJoueur stats[100];
