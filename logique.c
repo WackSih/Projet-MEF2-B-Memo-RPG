@@ -1,25 +1,25 @@
 #include "memo_rpg.h"
 
-Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur avant davancer quelle arme il veut chosir
+Personnage* choix_arme(Personnage *x){ //Fonction qui demande a l'utilisateur avant davancer quelle arme il veut choisir
     int armechoisie;
     do {
     printf("Quelle arme choississez vous ?\n");
     printf("1 -> ARC\n2 -> EPEE\n3 -> BDF\n4 -> LANCE\n");
     scanf("%d",&armechoisie);
-    }while(armechoisie<1 || armechoisie>4);
-    x->arme_actuelle = armechoisie - 1;
+    }while(armechoisie<1 || armechoisie>4); //TEST DE VALIDITE
+    x->arme_actuelle = armechoisie - 1; //AFFECTATION DE L'ARME CHOISIE
     return x;
 }
 
 int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
     if (ligne_new < 1 || ligne_new > 5) {
-        return 0; // Sortie tableau
+        return 0; // SORTIE TABLEAU
     }
     if (colonne_new < 1 || colonne_new > 5) {
-        return 0; // Sortie tableau
+        return 0; // SORTIE TABLEAU
     }
     if(tab->tableau[ligne_new][colonne_new].est_decouverte == 1){
-        return 0; 
+        return 0; //CASE DEJA DECOUVERTE
     }
     return 1; 
 }
@@ -30,8 +30,8 @@ int deplacement(Personnage* x, Plateau* tab) {
     // On vérifie les 4 directions. Si verifcaselibre renvoie 0 partout, le joueur est bloqué.
     if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 0 && verifcaselibre(tab, x->colonne, x->ligne + 1) == 0 && verifcaselibre(tab, x->colonne + 1, x->ligne) == 0 && verifcaselibre(tab, x->colonne - 1, x->ligne) == 0) {
         printf("\n[BLOQUE] %s n'a plus de cases cachees accessibles autour de lui !\n", x->nomJoueur);
-        reset_tableau(x, tab); // Retour à la position initiale
-        return 1; // Signale la fin du tour pour sortir de la boucle de jeu
+        reset_tableau(x, tab); // RETOUR AU SPAWN
+        return 1; // FIN DU TOUR
     }
     do {
         do {
@@ -40,12 +40,12 @@ int deplacement(Personnage* x, Plateau* tab) {
             printf("Choix : ");
             scanf("%d", &choixdeplacement);
             
-            if (choixdeplacement > 4 || choixdeplacement < 1) {
+            if (choixdeplacement > 4 || choixdeplacement < 1) {//TEST VALIDITE
                 printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
             }
-        } while(choixdeplacement > 4 || choixdeplacement < 1);
+        } while(choixdeplacement > 4 || choixdeplacement < 1); //TEST VALIDITE
         
-        // Application de la direction choisie
+        // APPLICATION DE LA DIRECTION CHOISIE
         if (choixdeplacement == 1) { // HAUT
             if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 1) {
                 x->ligne = x->ligne - 1;
