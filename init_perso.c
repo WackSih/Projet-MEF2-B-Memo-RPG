@@ -33,23 +33,23 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
         do {
             printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli \n: ", i + 1);
             scanf("%d", &choix);
-            if (choix < 1 || choix > 4) {
+            if (choix < 1 || choix > 4) { //TEST DE VALIDITE
                 printf("Choix invalide !\n");
             } else if (deja_pris[choix - 1] == 1) {
                 printf("Ce personnage est deja pris, choisissez-en un autre !\n");
             }
-        } while (choix < 1 || choix > 4 || deja_pris[choix - 1] == 1);
-        deja_pris[choix - 1] = 1; // On marque comme pris
+        } while (choix < 1 || choix > 4 || deja_pris[choix - 1] == 1); //FIN
+        deja_pris[choix - 1] = 1;         // On marque comme pris
         tab_joueurs[i].perso = (Classe)(choix - 1);
         printf("Joueur %d, quel est votre pseudo ? ", i + 1);
         scanf("%s", tab_joueurs[i].nomJoueur);
         
-        // Attribution de l'arme perso (on garde tes noms)
+        // Attribution de l'arme perso
         
-        if (choix == 1) tab_joueurs[i].arme_a_trouver = BATON;
-        else if (choix == 2) tab_joueurs[i].arme_a_trouver = ARC_M;
-        else if (choix == 3) tab_joueurs[i].arme_a_trouver = ANNEAU;
-        else if (choix == 4) tab_joueurs[i].arme_a_trouver = HACHE;
+        if (choix == 1) tab_joueurs[i].arme_a_trouver = BATON;       //GANDALF
+        else if (choix == 2) tab_joueurs[i].arme_a_trouver = ARC_M;  //TAURIEL
+        else if (choix == 3) tab_joueurs[i].arme_a_trouver = ANNEAU; //GOLLUM
+        else if (choix == 4) tab_joueurs[i].arme_a_trouver = HACHE;  //GIMLI
         printf("Joueur %d (%s) a choisi la classe %d\n", i + 1, tab_joueurs[i].nomJoueur, choix);
     }
 }
