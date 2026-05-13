@@ -29,22 +29,29 @@ void depart(Personnage tab_joueurs[], int nb_joueurs) {
 void select_perso(Personnage tab_joueurs[], int nb_joueurs) {
     int choix;
     int deja_pris[4] = {0, 0, 0, 0};     // 0 = libre, 1 = pris
+    int verif;
     for (int i = 0; i < nb_joueurs; i++) {
         do {
             printf("\nJoueur %d, choisissez votre personnage :\n 1 - Gandalf\n 2 - Tauriel \n 3 - Gollum \n 4 - Gimli \n: ", i + 1);
-            scanf("%d", &choix);
+            verif=scanf("%d", &choix);
             if (choix < 1 || choix > 4) {
                 printf("Choix invalide !\n");
             } else if (deja_pris[choix - 1] == 1) {
                 printf("Ce personnage est deja pris, choisissez-en un autre !\n");
             }
-        } while (choix < 1 || choix > 4 || deja_pris[choix - 1] == 1);
+            vide_buffer();
+        } while (choix < 1 || choix > 4 || deja_pris[choix - 1] == 1 || verif!=1);
         deja_pris[choix - 1] = 1; // On marque comme pris
         tab_joueurs[i].perso = (Classe)(choix - 1);
-        printf("Joueur %d, quel est votre pseudo ? ", i + 1);
-        scanf("%s", tab_joueurs[i].nomJoueur);
         
-        // Attribution de l'arme perso (on garde tes noms)
+        
+        do {
+            printf("Joueur %d, quel est votre pseudo ? ", i + 1);
+            scanf("%s", tab_joueurs[i].nomJoueur);
+            vide_buffer();
+        }while(strlen(tab_joueurs[i].nomJoueur)>49);
+        
+        // Attribution de l'arme perso 
         
         if (choix == 1) tab_joueurs[i].arme_a_trouver = BATON;
         else if (choix == 2) tab_joueurs[i].arme_a_trouver = ARC_M;
