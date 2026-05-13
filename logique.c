@@ -2,11 +2,13 @@
 
 Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur avant davancer quelle arme il veut chosir
     int armechoisie;
+    int verif;
     do {
     printf("Quelle arme choississez vous ?\n");
     printf("1 -> ARC\n2 -> EPEE\n3 -> BDF\n4 -> LANCE\n");
-    scanf("%d",&armechoisie);
-    }while(armechoisie<1 || armechoisie>4);
+    verif=scanf("%d",&armechoisie);
+    vide_buffer();
+    }while(armechoisie<1 || armechoisie>4 || verif!=1);
     x->arme_actuelle = armechoisie - 1;
     return x;
 }
@@ -27,6 +29,7 @@ int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
 int deplacement(Personnage* x, Plateau* tab) {
     int choixdeplacement;
     int deplacement_valide = 0; 
+    int verif;
     // On vérifie les 4 directions. Si verifcaselibre renvoie 0 partout, le joueur est bloqué.
     if (verifcaselibre(tab, x->colonne, x->ligne - 1) == 0 && verifcaselibre(tab, x->colonne, x->ligne + 1) == 0 && verifcaselibre(tab, x->colonne + 1, x->ligne) == 0 && verifcaselibre(tab, x->colonne - 1, x->ligne) == 0) {
         printf("\n[BLOQUE] %s n'a plus de cases cachees accessibles autour de lui !\n", x->nomJoueur);
@@ -38,12 +41,13 @@ int deplacement(Personnage* x, Plateau* tab) {
             printf("\nOu voulez-vous aller ?\n");
             printf("1 -> Haut\n2 -> Bas\n3 -> Droite\n4 -> Gauche\n");
             printf("Choix : ");
-            scanf("%d", &choixdeplacement);
+            verif=scanf("%d", &choixdeplacement);
             
             if (choixdeplacement > 4 || choixdeplacement < 1) {
                 printf("Choix invalide. Tapez 1, 2, 3 ou 4.\n");
             }
-        } while(choixdeplacement > 4 || choixdeplacement < 1);
+            vide_buffer();
+        } while(choixdeplacement > 4 || choixdeplacement < 1 || verif!=1);
         
         // Application de la direction choisie
         if (choixdeplacement == 1) { // HAUT
