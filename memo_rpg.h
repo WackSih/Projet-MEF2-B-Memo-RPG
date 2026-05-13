@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#define couleur(param) printf("\033[%sm",param) //Pour la couleur (version terminale)
 
 #define TAILLE 7
 
