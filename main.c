@@ -67,16 +67,22 @@ int main() {
             }
             afficher_plateau(&monPlateau, joueurs, nb_joueurs); 
 
-            printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n"); //MENU POUR REJOUER
-            printf("Choix : ");
-            scanf("%d", &rejouer);
+            do{
+                printf("Voulez-vous rejouer avec les mêmes joueurs et personnages ?\n1. OUI\n0. NON\n"); //MENU POUR REJOUER
+                printf("Choix : ");
+                verif=scanf("%d", &rejouer);
+                vide_buffer();
+            }while(verif!=1 || rejouer<0 || rejouer>1);
         } // FIN DE LA PARTIE AVEC CES JOUEURS
 
-        printf("\nQue voulez-vous faire ?\n");    //MENU DE FIN
-        printf("1. Revenir au menu principal\n");
-        printf("0. Quitter le programme\n");
-        printf("Choix : ");
-        scanf("%d", &continuer);
+       do{
+            printf("\nQue voulez-vous faire ?\n");    //MENU DE FIN
+            printf("1. Revenir au menu principal\n");
+            printf("0. Quitter le programme\n");
+            printf("Choix : ");
+            verif=scanf("%d", &continuer);
+            vide_buffer();
+        }while(verif!=1 || continuer<0|| continuer>1);
     }
     return 0;
 }
