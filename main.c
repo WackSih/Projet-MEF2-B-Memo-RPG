@@ -44,8 +44,11 @@ int main() {
             continue;
         }
 
-        printf("Combien de joueurs (2-4) ? ");
-        scanf("%d", &nb_joueurs);
+        do{
+            printf("Combien de joueurs (2-4) ? ");
+            verif=scanf("%d", &nb_joueurs);
+            vide_buffer();
+        }while(nb_joueurs>4 || nb_joueurs<2 || verif!=1);
 
         select_perso(joueurs, nb_joueurs); 
         while(rejouer==1){ //DEBUT DE LA BOUCLE AVEC LES JOUEURS ET PERSOS CHOISIS
