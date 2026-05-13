@@ -20,5 +20,5 @@ afin de lancer le jeu.
 ### Commande de Compilation dans le Terminal (Linux) :
 On se place toujours dans le bon dossier avec la bonne version (SDL), dans le terminal on écrit :
 
-> gcc affichage_sdl.c logique.c init_plateau.c sauvegarde.c memo_rpg.h init_perso.c -o memo_rpg.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
+> gcc affichage_sdl.c logique.c init_plateau.c sauvegarde.c init_perso.c -o memo_rpg -lSDL2 -lSDL2_image -lSDL2_ttf
 
