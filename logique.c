@@ -128,6 +128,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
 int resolution_case(Personnage* x, Plateau* tab){ 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0; // Variable pour retenir si on meurt dans un portail
+    int verif;
     
     // On vérifie le type de case et on regarde si le joeuur a la bonne arme 
     if(case_actuelle == DRAGON){
@@ -196,12 +197,13 @@ int resolution_case(Personnage* x, Plateau* tab){
         // 1. Demander la case cible (doit être cachée)
         do {
             printf("Entrez la ligne puis la colonne d'une case CACHEE pour l'echanger : ");
-            scanf("%d %d", &ligne, &colonne);
+            verif=scanf("%d %d", &ligne, &colonne);
             if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1) {
                 printf("Cible invalide ! Choisissez une case dans le labyrinthe qui n'est pas encore revelee.\n");
             }
-        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1); 
-        // 2. Échanger les types de cases [cite: 87]
+            vide_buffer();
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1 || verif!=2); 
+        // 2. Échanger les types de cases 
         Type_case temp = tab->tableau[ligne][colonne].type;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[x->ligne][x->colonne].type = temp;
@@ -215,11 +217,12 @@ int resolution_case(Personnage* x, Plateau* tab){
         printf("\nUn portail de teleportation ! Ou voulez-vous apparaitre ?\n");
         do{
             printf("Entrez la ligne puis la colonne : ");
-            scanf("%d %d", &ligne, &colonne);
+            verif=scanf("%d %d", &ligne, &colonne);
             if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5){
                 printf("Erreur, case en dehors du plateau de jeu\n");
             }
-        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5); // 
+            vide_buffer();
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || verif!=2);
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
