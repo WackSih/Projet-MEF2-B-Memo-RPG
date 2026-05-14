@@ -233,14 +233,19 @@ int resolution_case(Personnage* x, Plateau* tab){
     return 0; // Reussit
     }
 
-
-
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
+    couleur("30"); //Numéros de colonnes en gris
     printf("    0   1   2   3   4   5   6\n");
-    printf("  +---+---+---+---+---+---+---+\n");
+    couleur("8");
+    printf("  +---+---+---+---+---+---+---+\n"); // A CACHER
+    couleur("0");
     for (int i = 0; i < TAILLE; i++) {
-        printf("%d |", i); //print les colonnes
+        couleur("30"); //Numéros de lignes en gris
+        printf("%d ", i); //print les colonnes
+        couleur("8");
+        printf("|"); //A CACHER
+        couleur("0");
         for (int j = 0; j < TAILLE; j++) {
             int joueur_present = -1;
             for (int k = 0; k < nb_joueurs; k++) {
@@ -253,25 +258,53 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 printf(" J%d|", joueur_present + 1);
             } 
             else if (tab->tableau[i][j].type == VIDE) {
+                couleur("8");
+                if(j==0 && i<TAILLE-1 && i>0) couleur("0");
+                if(j==TAILLE/2-1 && (i==0 ||i==TAILLE-1)) couleur("0");
                 printf("   |"); // Les coins sont vides
+                couleur("0");
             } 
             else {
                 Type_case t = tab->tableau[i][j].type;
-                if (t == DRAGON) printf(" D |");
-                else if (t == ORC) printf(" O |");
-                else if (t == NAZGUL) printf(" N |");
-                else if (t == ARAIGNEE) printf(" A |");
-                else if (t == TRESOR) printf(" T |");
-                else if (t == ARME_SPE) printf(" W |");
-                else if (t == PORTAIL) printf(" P |");
-                else if (t == TOTEM) printf(" M |");
-                else if (t == DEPART) printf(" S |");
-                else printf("   |");
+                couleur("31"); //Rouge
+                if (t == DRAGON) printf(" D ");
+                else if (t == ORC) printf(" O ");
+                else if (t == NAZGUL) printf(" N ");
+                else if (t == ARAIGNEE) printf(" A ");
+                
+                else if (t == TRESOR){
+                    couleur("33");
+                    printf(" T ");}
+                else if (t == ARME_SPE){
+                    couleur("34"); //Bleu
+                    printf(" W ");}
+                else if (t == PORTAIL){
+                    couleur("35"); //Violet
+                    printf(" P ");}
+                else if (t == TOTEM){
+                    couleur("36");
+                    printf(" M ");}
+                else if (t == DEPART){
+                    couleur("0");
+                    printf(" S ");}
+                else printf("   ");
+                couleur("0");
+                if(j==TAILLE-1 && i==(TAILLE-1)/2) couleur("8");
+                printf("|");
+                couleur("0");
             }
         }
-        printf("\n  +---+---+---+---+---+---+---+\n");
+        if(i<2 || i>3 ) couleur("8");
+        printf("\n  ----");//A CACHER
+        if(i!=6) couleur("0"); //dernière ligne
+        printf("+---+---+---+---+---+");
+        if(i<2 || i>3 ) couleur("8");
+        printf("----\n"); //A CACHER
+        couleur("0");
     }
 }
+
+
 
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
     int fin_de_partie = 0;
