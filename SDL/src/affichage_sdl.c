@@ -67,49 +67,49 @@ int main(int argc, char* argv[]) {
     
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    SDL_Texture* imageAccueil = IMG_LoadTexture(renderer, "ecran_accueil.png");
-    SDL_Texture* imageSelection = IMG_LoadTexture(renderer, "choix_joueur.png");
-    SDL_Texture* imageSelectionNb = IMG_LoadTexture(renderer, "choix_nb_joueurs.png"); 
-    SDL_Texture* imageMenu = IMG_LoadTexture(renderer, "menu_principal.png");
-    SDL_Texture* imageHallOfFame = IMG_LoadTexture(renderer, "hall_of_fame.png"); 
-    SDL_Texture* imagePlateauJeu = IMG_LoadTexture(renderer, "plateau.png"); 
-    SDL_Texture* imageChoixArme = IMG_LoadTexture(renderer, "choix_arme.png"); 
-    SDL_Texture* imageRegles = IMG_LoadTexture(renderer, "regles.png");
+    SDL_Texture* imageAccueil = IMG_LoadTexture(renderer, "assets/ecran_accueil.png");
+    SDL_Texture* imageSelection = IMG_LoadTexture(renderer, "assets/choix_joueur.png");
+    SDL_Texture* imageSelectionNb = IMG_LoadTexture(renderer, "assets/choix_nb_joueurs.png"); 
+    SDL_Texture* imageMenu = IMG_LoadTexture(renderer, "assets/menu_principal.png");
+    SDL_Texture* imageHallOfFame = IMG_LoadTexture(renderer, "assets/hall_of_fame.png"); 
+    SDL_Texture* imagePlateauJeu = IMG_LoadTexture(renderer, "assets/plateau.png"); 
+    SDL_Texture* imageChoixArme = IMG_LoadTexture(renderer, "assets/choix_arme.png"); 
+    SDL_Texture* imageRegles = IMG_LoadTexture(renderer, "assets/regles.png");
     
-    SDL_Texture* imgOrc = IMG_LoadTexture(renderer, "orc.png");
-    SDL_Texture* imgDragon = IMG_LoadTexture(renderer, "dragon.png");
-    SDL_Texture* imgNazgul = IMG_LoadTexture(renderer, "nazgul.png");
-    SDL_Texture* imgAraignee = IMG_LoadTexture(renderer, "araignee.png");
-    SDL_Texture* imgTresor = IMG_LoadTexture(renderer, "tresor.png");
-    SDL_Texture* imgTotem = IMG_LoadTexture(renderer, "totem.png");
-    SDL_Texture* imgPortail = IMG_LoadTexture(renderer, "portail.png");
-    SDL_Texture* imageFinPartie = IMG_LoadTexture(renderer, "menu_fin.png");
+    SDL_Texture* imgOrc = IMG_LoadTexture(renderer, "assets/orc.png");
+    SDL_Texture* imgDragon = IMG_LoadTexture(renderer, "assets/dragon.png");
+    SDL_Texture* imgNazgul = IMG_LoadTexture(renderer, "assets/nazgul.png");
+    SDL_Texture* imgAraignee = IMG_LoadTexture(renderer, "assets/araignee.png");
+    SDL_Texture* imgTresor = IMG_LoadTexture(renderer, "assets/tresor.png");
+    SDL_Texture* imgTotem = IMG_LoadTexture(renderer, "assets/totem.png");
+    SDL_Texture* imgPortail = IMG_LoadTexture(renderer, "assets/portail.png");
+    SDL_Texture* imageFinPartie = IMG_LoadTexture(renderer, "assets/menu_fin.png");
     
-    SDL_Texture* imgBaton = IMG_LoadTexture(renderer, "baton.png");
-    SDL_Texture* imgArcSpe = IMG_LoadTexture(renderer, "arc.png");
-    SDL_Texture* imgHache = IMG_LoadTexture(renderer, "hache.png");
-    SDL_Texture* imgAnneau = IMG_LoadTexture(renderer, "anneau.png");
+    SDL_Texture* imgBaton = IMG_LoadTexture(renderer, "assets/baton.png");
+    SDL_Texture* imgArcSpe = IMG_LoadTexture(renderer, "assets/arc.png");
+    SDL_Texture* imgHache = IMG_LoadTexture(renderer, "assets/hache.png");
+    SDL_Texture* imgAnneau = IMG_LoadTexture(renderer, "assets/anneau.png");
 
     // --- Chargement des 4 pions de personnages ---
-    SDL_Texture* imgPionGandalf = IMG_LoadTexture(renderer, "piongandalf.png");
-    SDL_Texture* imgPionGollum = IMG_LoadTexture(renderer, "piongolum.png");
-    SDL_Texture* imgPionGimli = IMG_LoadTexture(renderer, "piongimli.png");
-    SDL_Texture* imgPionTauriel = IMG_LoadTexture(renderer, "piontauriel.png");
+    SDL_Texture* imgPionGandalf = IMG_LoadTexture(renderer, "assets/piongandalf.png");
+    SDL_Texture* imgPionGollum = IMG_LoadTexture(renderer, "assets/piongolum.png");
+    SDL_Texture* imgPionGimli = IMG_LoadTexture(renderer, "assets/piongimli.png");
+    SDL_Texture* imgPionTauriel = IMG_LoadTexture(renderer, "assets/piontauriel.png");
 
     // --- Chargement des 11 tuiles carrées pour le plateau ---
-    SDL_Texture* case_orc = IMG_LoadTexture(renderer, "case_orc.png");
-    SDL_Texture* case_dragon = IMG_LoadTexture(renderer, "case_dragon.png");
-    SDL_Texture* case_nazgul = IMG_LoadTexture(renderer, "case_nazgul.png");
-    SDL_Texture* case_araignee = IMG_LoadTexture(renderer, "case_araignee.png");
-    SDL_Texture* case_tresor = IMG_LoadTexture(renderer, "case_tresor.png");
-    SDL_Texture* case_totem = IMG_LoadTexture(renderer, "case_totem.png");
-    SDL_Texture* case_portail = IMG_LoadTexture(renderer, "case_portail.png");
-    SDL_Texture* case_baton = IMG_LoadTexture(renderer, "case_baton.png");
-    SDL_Texture* case_arc = IMG_LoadTexture(renderer, "case_arc.png");
-    SDL_Texture* case_hache = IMG_LoadTexture(renderer, "case_hache.png");
-    SDL_Texture* case_anneau = IMG_LoadTexture(renderer, "case_anneau.png");
+    SDL_Texture* case_orc = IMG_LoadTexture(renderer, "assets/case_orc.png");
+    SDL_Texture* case_dragon = IMG_LoadTexture(renderer, "assets/case_dragon.png");
+    SDL_Texture* case_nazgul = IMG_LoadTexture(renderer, "assets/case_nazgul.png");
+    SDL_Texture* case_araignee = IMG_LoadTexture(renderer, "assets/case_araignee.png");
+    SDL_Texture* case_tresor = IMG_LoadTexture(renderer, "assets/case_tresor.png");
+    SDL_Texture* case_totem = IMG_LoadTexture(renderer, "assets/case_totem.png");
+    SDL_Texture* case_portail = IMG_LoadTexture(renderer, "assets/case_portail.png");
+    SDL_Texture* case_baton = IMG_LoadTexture(renderer, "assets/case_baton.png");
+    SDL_Texture* case_arc = IMG_LoadTexture(renderer, "assets/case_arc.png");
+    SDL_Texture* case_hache = IMG_LoadTexture(renderer, "assets/case_hache.png");
+    SDL_Texture* case_anneau = IMG_LoadTexture(renderer, "assets/case_anneau.png");
 
-    TTF_Font* police = TTF_OpenFont("police.ttf", 24);
+    TTF_Font* police = TTF_OpenFont("assets/police.ttf", 24);
     if (!police) {
         printf("Erreur police: %s\n", TTF_GetError());
         return 1;
@@ -187,8 +187,8 @@ int main(int argc, char* argv[]) {
         SDL_FreeSurface(s_nom); SDL_FreeSurface(s_part); SDL_FreeSurface(s_v); SDL_FreeSurface(s_d); SDL_FreeSurface(s_m);
     }
     
-    Mix_Music* musiqueMenu = Mix_LoadMUS("menu.mp3"); 
-    Mix_Music* musiqueJeu = Mix_LoadMUS("jeu.mp3");   
+    Mix_Music* musiqueMenu = Mix_LoadMUS("assets/menu.mp3"); 
+    Mix_Music* musiqueJeu = Mix_LoadMUS("assets/jeu.mp3");   
     
     // VOLUME 
     Mix_VolumeMusic(MIX_MAX_VOLUME / 8); 
