@@ -53,7 +53,7 @@ void select_perso(Personnage tab_joueurs[], int nb_joueurs);
 Personnage* choix_arme(Personnage *x);
 int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new);
 int deplacement(Personnage* x, Plateau* tab);
-int resolution_case(Personnage* x, Plateau* tab);
+int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colonne);
 void afficher_plateau(Plateau* p, Personnage* joueurs, int nb_joueurs);
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs);
 void reset_tableau(Personnage* x, Plateau* tab);
