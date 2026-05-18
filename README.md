@@ -22,3 +22,7 @@ On se place toujours dans le bon dossier avec la bonne version (SDL), dans le te
 
 > gcc affichage_sdl.c logique.c init_plateau.c sauvegarde.c init_perso.c -o memo_rpg -lSDL2 -lSDL2_image -lSDL2_ttf
 
+Commande windows gcc affichage_sdl.c init_plateau.c init_perso.c sauvegarde.c logique.c -o memo_rpg_menus.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+
+
+commande linux gcc affichage_sdl.c init_plateau.c init_perso.c sauvegarde.c logique.c -o memo_rpg -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
