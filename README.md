@@ -20,9 +20,10 @@ une fois la partie finie, tappez la commande suivante :
 
 > make clean
 
+afin de nettoyer les fichiers.
 
+Vous pouvez ensuite recommencer si vous voulez rejouer.
 
-refaire
 
 ## Version SDL (graphique) :
 
