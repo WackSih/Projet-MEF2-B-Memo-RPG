@@ -191,7 +191,7 @@ int main(int argc, char* argv[]) {
     Mix_Music* musiqueJeu = Mix_LoadMUS("assets/jeu.mp3");   
     
     // VOLUME 
-    Mix_VolumeMusic(MIX_MAX_VOLUME / 8); 
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 10); 
 
     // On lance la musique du menu avec un "Fade In" de 2000 millisecondes (2 secondes)
     if (musiqueMenu != NULL) {
