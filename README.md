@@ -16,11 +16,11 @@ pour compiler suivie de celle ci :
 
 afin de lancer le jeu.
 
-Une fois la partie finie, tappez la commande suivante : 
+une fois la partie finie, tappez la commande suivante : 
 
 > make clean
 
-pour 
+
 
 refaire
 
