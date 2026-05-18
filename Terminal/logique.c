@@ -281,12 +281,10 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 couleur("0");
             } 
             else {
-                // --- NOUVEAU : On cache la case si elle n'est pas découverte ---
                 if (tab->tableau[i][j].est_decouverte == 0) {
                     couleur("37"); // Couleur blanche/grise pour les points d'interrogation
                     printf(" ? ");
                 } 
-                // Sinon, on affiche son vrai contenu
                 else {
                     Type_case t = tab->tableau[i][j].type;
                     couleur("31"); //Rouge
@@ -312,8 +310,6 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                         printf(" S ");}
                     else printf("   ");
                 }
-                
-                // --- GESTION DES BORDURES (inchangée) ---
                 couleur("0");
                 if(j==TAILLE-1 && i==(TAILLE-1)/2) couleur("8");
                 printf("|");
@@ -339,7 +335,7 @@ void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){
             while(mort == 0 && fin_de_partie == 0) { // Tant que le joueur est en vie et que la partie n'est pas finie, il rejoue !
                 afficher_plateau(tab, joueur, nb_joueurs);
                 printf("\n=============================\n");
-                printf(" C'est à %s de jouer\n", joueur[i].nomJoueur);
+                printf(" C'est a %s de jouer\n", joueur[i].nomJoueur);
                 printf("=============================\n");
                 if (deplacement(&joueur[i], tab) == 1) { // Si il est bloqué deplacement return 1
                     mort = 1; 
