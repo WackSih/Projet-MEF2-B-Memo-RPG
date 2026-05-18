@@ -34,7 +34,7 @@ Cette version propose une interface graphique complète et une gestion sonore po
 1. **Dossier `assets/` :** Assurez-vous que le dossier `assets/` (contenant les images `.png`, la police `police.ttf` et les musiques `.mp3`) est bien présent à la racine du projet, juste à côté de vos fichiers de configuration.
 2. **Fichiers `.dll` (Windows uniquement) :** Pour pouvoir lancer l'exécutable sous Windows, les fichiers de liaison dynamique de la SDL (`SDL2.dll`, `SDL2_image.dll`, `SDL2_ttf.dll`, `SDL2_mixer.dll`) doivent impérativement être copiés à la racine du projet.
 
-### 🛠️ Compilation et Exécution via le Makefile
+### Compilation et Exécution via le Makefile
 
 Si vous utilisez le fichier `Makefile_sdl` dédié à la version graphique :
 
