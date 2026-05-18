@@ -2,7 +2,7 @@
 
 Ce jeu est codé exclusivement en langage c
 
-##Version Terminale :
+## Version Terminale :
 
 ### Commande de Compilation dans le Terminal (Linux) :
 Après s'être placé dans le bon dossier avec les différents fichiers du jeu (via la commandes 'cd'), il suffit de rentrer la commande suivante : 
@@ -11,7 +11,8 @@ Après s'être placé dans le bon dossier avec les différents fichiers du jeu (
 
 afin de lancer le jeu.
 
-##Version SDL (graphique) :
+
+## Version SDL (graphique) :
 
 ### Commande de Compilation dans le Terminal (Linux) :
 On se place toujours dans le bon dossier avec la bonne version (SDL), dans le terminal on écrit :
