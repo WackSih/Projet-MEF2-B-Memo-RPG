@@ -3,8 +3,6 @@
 Ce jeu est un memory RPG inspiré de l'univers du Seigneur des Anneaux. 
 Il est codé exclusivement en langage C.
 
-Le projet dispose d'une architecture propre séparant le code source (dossier `src/`) et les ressources multimédias (dossier `assets/`).
-
 ---
 
 ## Version Terminale
