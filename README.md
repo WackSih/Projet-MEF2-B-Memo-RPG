@@ -16,7 +16,7 @@ pour compiler suivie de celle ci :
 
 afin de lancer le jeu.
 
-une fois la partie finie, tappez la commande suivante : 
+Une fois la partie finie, tappez la commande suivante : 
 
 > make clean
 
