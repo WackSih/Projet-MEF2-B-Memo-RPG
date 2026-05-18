@@ -1,40 +1,52 @@
 # Projet-MEF2-B-Memo-RPG
 
-Ce jeu est un memory inspiré du Seigneur des Anneaux.
-Il est codé exclusivement en langage c.
+Ce jeu est un memory RPG inspiré de l'univers du Seigneur des Anneaux. 
+Il est codé exclusivement en langage C.
 
-## Version Terminale :
+Le projet dispose d'une architecture propre séparant le code source (dossier `src/`) et les ressources multimédias (dossier `assets/`).
 
-### Commande de Compilation dans le Terminal (Linux) :
-Après s'être placé dans le bon dossier avec les différents fichiers du jeu (via la commandes 'cd'), tappez la commande : 
+---
+
+## Version Terminale
+
+### Compilation (Linux & Windows via MSYS2)
+Ouvrez un terminal dans le dossier principal du jeu et utilisez la commande `make` pour compiler le projet grâce au Makefile fourni :
 
 > make
 
-pour compiler suivie de celle ci :
+### Exécution
+Pour lancer le jeu, tapez la commande suivante :
 
 > ./exec
 
-afin de lancer le jeu.
+*(Sur Windows, tapez : `.\exec.exe`)*
 
-Une fois la partie finie, tappez la commande suivante : 
+### Nettoyage
+Une fois la partie terminée, vous pouvez nettoyer les fichiers de compilation (`.o` et exécutables) avec la commande :
 
 > make clean
 
-afin de nettoyer les fichiers.
+---
 
-Vous pouvez ensuite recommencer si vous voulez rejouer.
+## Version SDL
 
+**⚠️ Prérequis important :** Assurez-vous que le dossier `assets/` contenant toutes les images, polices et musiques est bien présent à la racine du projet, à côté de l'exécutable. Sur Windows, les fichiers `.dll` de la SDL2 doivent également se trouver dans ce dossier.
 
-## Version SDL (graphique) :
+### Compilation et Exécution (Linux)
+Compilez le jeu en liant les bibliothèques SDL2 avec la commande suivante :
 
-### Commande de Compilation dans le Terminal (Linux) :
-On se place toujours dans le bon dossier avec la bonne version (SDL), dans le terminal on écrit :
+> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o memo_rpg_sdl -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
-> gcc affichage_sdl.c logique.c init_plateau.c sauvegarde.c init_perso.c -o memo_rpg -lSDL2 -lSDL2_image -lSDL2_ttf
+Pour lancer le jeu :
+> ./memo_rpg_sdl
 
-Commande windows  :
-> gcc affichage_sdl.c init_plateau.c init_perso.c sauvegarde.c logique.c -o memo_rpg_menus.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+### Compilation et Exécution (Windows)
+Dans le terminal PowerShell ou CMD, tapez la commande suivante pour compiler :
 
+> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o memo_rpg_sdl.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
-commande linux :
-> gcc affichage_sdl.c init_plateau.c init_perso.c sauvegarde.c logique.c -o memo_rpg -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+Pour lancer le jeu :
+> .\memo_rpg_sdl.exe
+
+---
+*Amusez-vous bien et que le meilleur aventurier gagne !*
