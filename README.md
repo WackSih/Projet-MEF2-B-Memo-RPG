@@ -1,16 +1,28 @@
 # Projet-MEF2-B-Memo-RPG
 
-Ce jeu est codé exclusivement en langage c
+Ce jeu est un memory inspiré du Seigneur des Anneaux.
+Il est codé exclusivement en langage c.
 
 ## Version Terminale :
 
 ### Commande de Compilation dans le Terminal (Linux) :
-Après s'être placé dans le bon dossier avec les différents fichiers du jeu (via la commandes 'cd'), il suffit de rentrer la commande suivante : 
+Après s'être placé dans le bon dossier avec les différents fichiers du jeu (via la commandes 'cd'), tappez la commande : 
+
+> make
+
+pour compiler suivie de celle ci :
 
 > ./exec
 
 afin de lancer le jeu.
 
+Une fois la partie finie, tappez la commande suivante : 
+
+> make clean
+
+pour 
+
+refaire
 
 ## Version SDL (graphique) :
 
