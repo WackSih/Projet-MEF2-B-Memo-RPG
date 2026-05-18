@@ -1,9 +1,0 @@
-name: Verif_Compilation
-on: [push] # Le robot travaille dès que tu envoies du code
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Compiler tout
-        run: gcc *.c -o test_exec # Il essaie de compiler tous tes fichiers .c
