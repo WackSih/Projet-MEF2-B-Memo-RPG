@@ -28,23 +28,38 @@ Une fois la partie terminée, vous pouvez nettoyer les fichiers de compilation (
 
 ## Version SDL
 
-**⚠️ Prérequis important :** Assurez-vous que le dossier `assets/` contenant toutes les images, polices et musiques est bien présent à la racine du projet, à côté de l'exécutable. Sur Windows, les fichiers `.dll` de la SDL2 doivent également se trouver dans ce dossier.
+Cette version propose une interface graphique complète et une gestion sonore pour une expérience de jeu immersive.
 
-### Compilation et Exécution (Linux)
-Compilez le jeu en liant les bibliothèques SDL2 avec la commande suivante :
+### ⚠️ Prérequis importants
+1. **Dossier `assets/` :** Assurez-vous que le dossier `assets/` (contenant les images `.png`, la police `police.ttf` et les musiques `.mp3`) est bien présent à la racine du projet, juste à côté de vos fichiers de configuration.
+2. **Fichiers `.dll` (Windows uniquement) :** Pour pouvoir lancer l'exécutable sous Windows, les fichiers de liaison dynamique de la SDL (`SDL2.dll`, `SDL2_image.dll`, `SDL2_ttf.dll`, `SDL2_mixer.dll`) doivent impérativement être copiés à la racine du projet.
 
-> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o memo_rpg_sdl -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+### 🛠️ Compilation et Exécution via le Makefile
 
-Pour lancer le jeu :
-> ./memo_rpg_sdl
+Si vous utilisez le fichier `Makefile_sdl` dédié à la version graphique :
 
-### Compilation et Exécution (Windows)
-Dans le terminal PowerShell ou CMD, tapez la commande suivante pour compiler :
+**Pour compiler :**
+> make -f Makefile_sdl
 
-> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o memo_rpg_sdl.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+**Pour lancer le jeu :**
+* **Linux :** `./exec_sdl`
+* **Windows :** `.\exec_sdl.exe`
 
-Pour lancer le jeu :
-> .\memo_rpg_sdl.exe
+**Pour nettoyer les fichiers objets (`.o`) et l'exécutable :**
+> make -f Makefile_sdl clean
 
 ---
-*Amusez-vous bien et que le meilleur aventurier gagne !*
+
+### Compilation manuelle (Alternative sans Makefile)
+
+Si vous préférez compiler directement à la main dans votre terminal depuis la racine du projet :
+
+#### En ligne de commande sous Linux :
+> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o exec_sdl -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+
+**Pour lancer :** `./exec_sdl`
+
+#### En ligne de commande sous Windows (PowerShell / CMD) :
+> gcc src/affichage_sdl.c src/init_plateau.c src/init_perso.c src/sauvegarde.c src/logique.c -o exec_sdl.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+
+**Pour lancer :** `.\exec_sdl.exe`
