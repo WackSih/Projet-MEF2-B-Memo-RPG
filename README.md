@@ -50,7 +50,7 @@ Si vous utilisez le fichier `Makefile_sdl` dédié à la version graphique :
 
 ---
 
-### Compilation manuelle (Alternative sans Makefile)
+### Compilation manuelle (Alternative sans Makefile pour Windows)
 
 Si vous préférez compiler directement à la main dans votre terminal depuis la racine du projet :
 
