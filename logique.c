@@ -269,6 +269,7 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                     break;
                 }
             }
+            
             if (joueur_present != -1) {
                 printf(" J%d|", joueur_present + 1);
             } 
@@ -280,29 +281,39 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 couleur("0");
             } 
             else {
-                Type_case t = tab->tableau[i][j].type;
-                couleur("31"); //Rouge
-                if (t == DRAGON) printf(" D ");
-                else if (t == ORC) printf(" O ");
-                else if (t == NAZGUL) printf(" N ");
-                else if (t == ARAIGNEE) printf(" A ");
+                // --- NOUVEAU : On cache la case si elle n'est pas découverte ---
+                if (tab->tableau[i][j].est_decouverte == 0) {
+                    couleur("37"); // Couleur blanche/grise pour les points d'interrogation
+                    printf(" ? ");
+                } 
+                // Sinon, on affiche son vrai contenu
+                else {
+                    Type_case t = tab->tableau[i][j].type;
+                    couleur("31"); //Rouge
+                    if (t == DRAGON) printf(" D ");
+                    else if (t == ORC) printf(" O ");
+                    else if (t == NAZGUL) printf(" N ");
+                    else if (t == ARAIGNEE) printf(" A ");
+                    
+                    else if (t == TRESOR){
+                        couleur("33");
+                        printf(" T ");}
+                    else if (t == ARME_SPE){
+                        couleur("34"); //Bleu
+                        printf(" W ");}
+                    else if (t == PORTAIL){
+                        couleur("35"); //Violet
+                        printf(" P ");}
+                    else if (t == TOTEM){
+                        couleur("36");
+                        printf(" M ");}
+                    else if (t == DEPART){
+                        couleur("0");
+                        printf(" S ");}
+                    else printf("   ");
+                }
                 
-                else if (t == TRESOR){
-                    couleur("33");
-                    printf(" T ");}
-                else if (t == ARME_SPE){
-                    couleur("34"); //Bleu
-                    printf(" W ");}
-                else if (t == PORTAIL){
-                    couleur("35"); //Violet
-                    printf(" P ");}
-                else if (t == TOTEM){
-                    couleur("36");
-                    printf(" M ");}
-                else if (t == DEPART){
-                    couleur("0");
-                    printf(" S ");}
-                else printf("   ");
+                // --- GESTION DES BORDURES (inchangée) ---
                 couleur("0");
                 if(j==TAILLE-1 && i==(TAILLE-1)/2) couleur("8");
                 printf("|");
