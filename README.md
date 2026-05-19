@@ -7,7 +7,7 @@ Il est codé exclusivement en langage C.
 
 ## Version Terminale
 
-Cette version classique propose une expérience textuelle et légère directement jouable depuis l'invite de commandes.
+Cette version classique propose une expérience directement jouable depuis l'invite de commandes.
 
 ### ⚠️ Prérequis importants
 1. **Fichiers sources :** Assurez-vous que tous les fichiers `.c` et `.h` sont correctement placés dans le dossier `src/`.
