@@ -439,13 +439,56 @@ int main(int argc, char* argv[]) {
                             ecranActuel = ECRAN_VISEUR;
                         } 
                         else {
+                            // --- LIGNE CORRIGÉE : On lance la résolution du combat ! ---
                             int mort = resolution_case(&joueurs[joueur_en_cours], &monPlateau, 0, 0);
-                            
+
                             if (joueurs[joueur_en_cours].aLeTresor == 1 && joueurs[joueur_en_cours].aLarme == 1) {
                                 printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueurs[joueur_en_cours].nomJoueur);
+                                
+                                // 1. MISE A JOUR DU FICHIER TEXTE
                                 mettre_a_jour_stats(joueurs[joueur_en_cours].nomJoueur, 1, 0, 0);
                                 for (int k = 0; k < nombreDeJoueurs; k++) {
                                     if (k != joueur_en_cours) mettre_a_jour_stats(joueurs[k].nomJoueur, 0, 1, 0);
+                                }
+                                
+                                // 2. RECHARGEMENT DES TEXTURES DU HALL OF FAME POUR LA SDL
+                                for (int i = 0; i < nbLignesLues; i++) {
+                                    SDL_DestroyTexture(tex_nom[i]);
+                                    SDL_DestroyTexture(tex_part[i]);
+                                    SDL_DestroyTexture(tex_v[i]);
+                                    SDL_DestroyTexture(tex_d[i]);
+                                    SDL_DestroyTexture(tex_m[i]);
+                                }
+                                
+                                nbLignesLues = charger_stats(mesStats, MAX_LIGNES);
+                                
+                                for (int i = 0; i < nbLignesLues; i++) {
+                                    char str_part[10], str_v[10], str_d[10], str_m[10];
+                                    sprintf(str_part, "%d", mesStats[i].parties);
+                                    sprintf(str_v, "%d", mesStats[i].victoires);
+                                    sprintf(str_d, "%d", mesStats[i].defaites);
+                                    sprintf(str_m, "%d", mesStats[i].nmb_mort);
+
+                                    SDL_Surface* s_nom = TTF_RenderUTF8_Blended(police, mesStats[i].nom, couleurTexte);
+                                    SDL_Surface* s_part = TTF_RenderUTF8_Blended(police, str_part, couleurTexte);
+                                    SDL_Surface* s_v = TTF_RenderUTF8_Blended(police, str_v, couleurTexte);
+                                    SDL_Surface* s_d = TTF_RenderUTF8_Blended(police, str_d, couleurTexte);
+                                    SDL_Surface* s_m = TTF_RenderUTF8_Blended(police, str_m, couleurTexte);
+
+                                    tex_nom[i] = SDL_CreateTextureFromSurface(renderer, s_nom);
+                                    tex_part[i] = SDL_CreateTextureFromSurface(renderer, s_part);
+                                    tex_v[i] = SDL_CreateTextureFromSurface(renderer, s_v);
+                                    tex_d[i] = SDL_CreateTextureFromSurface(renderer, s_d);
+                                    tex_m[i] = SDL_CreateTextureFromSurface(renderer, s_m);
+
+                                    int y_base = 210 + (i * 35); 
+                                    r_nom[i]  = (SDL_Rect){ 225, y_base, s_nom->w, s_nom->h };  
+                                    r_part[i] = (SDL_Rect){ 460, y_base, s_part->w, s_part->h };
+                                    r_v[i]    = (SDL_Rect){ 548, y_base, s_v->w, s_v->h };      
+                                    r_d[i]    = (SDL_Rect){ 598, y_base, s_d->w, s_d->h };      
+                                    r_m[i]    = (SDL_Rect){ 635, y_base, s_m->w, s_m->h };      
+
+                                    SDL_FreeSurface(s_nom); SDL_FreeSurface(s_part); SDL_FreeSurface(s_v); SDL_FreeSurface(s_d); SDL_FreeSurface(s_m);
                                 }
                                 
                                 curseur_fin = 0; 
