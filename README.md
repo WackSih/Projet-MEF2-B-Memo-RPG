@@ -7,7 +7,7 @@ Il est codé exclusivement en langage C.
 
 ## Version Terminale
 
-### Compilation (Linux & Windows via MSYS2)
+### Compilation (Linux & Windows)
 Ouvrez un terminal dans le dossier principal du jeu et utilisez la commande `make` pour compiler le projet grâce au Makefile fourni :
 
 > make
