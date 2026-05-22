@@ -210,7 +210,7 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
     
     if(case_actuelle == TOTEM){
         int colonne, ligne;
-        printf("\nVous etes tombe sur un Totem ! La magie opère...\n");
+        printf("\nVous etes tombe sur un Totem ! La magie opere...\n");
         do {
             printf("\nEntrez la ligne puis la colonne d'une case CACHEE pour l'echanger : \n");
             verif = scanf("%d %d", &ligne, &colonne);
