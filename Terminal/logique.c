@@ -210,20 +210,24 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
     
     if(case_actuelle == TOTEM){
         int colonne, ligne;
-        printf("\nVous etes tombe sur un Totem ! La magie va operer...\n");
+        printf("\nVous etes tombe sur un Totem ! La magie opère...\n");
         do {
             printf("\nEntrez la ligne puis la colonne d'une case CACHEE pour l'echanger : \n");
-            verif=scanf("%d %d", &ligne, &colonne);
+            verif = scanf("%d %d", &ligne, &colonne);
             if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1) {
-                printf("\nCible invalide ! Choisissez une case dans le labyrinthe qui n'est pas encore revelee.\n"); //On a decide de faire en sorte que la case devait etre cachée
+                printf("\nCible invalide ! Choisissez une case dans le labyrinthe (entre 1 et 5) qui n'est pas encore revelee.\n");
             }
             vide_buffer();
-        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1 || verif!=2); 
-        Type_case temp = tab->tableau[ligne][colonne].type;
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1 || verif != 2); 
+        Type_case temp_type = tab->tableau[ligne][colonne].type;
+        int temp_proprio = tab->tableau[ligne][colonne].proprietaire;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
-        tab->tableau[x->ligne][x->colonne].type = temp;
+        tab->tableau[ligne][colonne].proprietaire = tab->tableau[x->ligne][x->colonne].proprietaire;
+        tab->tableau[x->ligne][x->colonne].type = temp_type;
+        tab->tableau[x->ligne][x->colonne].proprietaire = temp_proprio;
         printf("\nLes cases ont ete permutees ! La magie du Totem vous epuise...\n");
-        mort = resolution_case(x,tab,ligne,colonne); // Appel recurssif pour faire resoudre la case sur laquel on est 
+        mort = resolution_case(x, tab, 0, 0); 
+        return mort;
     }
     
     if(case_actuelle == PORTAIL){
@@ -231,21 +235,21 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
         printf("\nUn portail de teleportation ! Ou voulez-vous apparaitre ?\n");
         do{
             printf("\nEntrez la ligne puis la colonne : \n");
-            verif=scanf("%d %d", &ligne, &colonne);
+            verif = scanf("%d %d", &ligne, &colonne);
             if(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5){
-                printf("\nErreur, case en dehors du plateau de jeu\n");
+                printf("\nErreur, case en dehors du plateau de jeu (choisissez entre 1 et 5).\n");
             }
             vide_buffer();
-        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || verif!=2);
-        
+        } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || verif != 2);
         x->ligne = ligne;
         x->colonne = colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
         printf("\nVouuuuh ! Teleportation en [%d][%d] !\n", ligne, colonne);
-        mort = resolution_case(x, tab, ligne, colonne); 
+        mort = resolution_case(x, tab, 0, 0); 
         return mort; 
     }
-    return 0; // Reussit
+    
+    return 0; // Réussit
 }
 
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
@@ -281,35 +285,31 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 couleur("0");
             } 
             else {
-                if (tab->tableau[i][j].est_decouverte == 0) {
-                    couleur("37"); // Couleur blanche/grise pour les points d'interrogation
-                    printf(" ? ");
-                } 
-                else {
-                    Type_case t = tab->tableau[i][j].type;
-                    couleur("31"); //Rouge
-                    if (t == DRAGON) printf(" D ");
-                    else if (t == ORC) printf(" O ");
-                    else if (t == NAZGUL) printf(" N ");
-                    else if (t == ARAIGNEE) printf(" A ");
-                    
-                    else if (t == TRESOR){
-                        couleur("33");
-                        printf(" T ");}
-                    else if (t == ARME_SPE){
-                        couleur("34"); //Bleu
-                        printf(" W ");}
-                    else if (t == PORTAIL){
-                        couleur("35"); //Violet
-                        printf(" P ");}
-                    else if (t == TOTEM){
-                        couleur("36");
-                        printf(" M ");}
-                    else if (t == DEPART){
-                        couleur("0");
-                        printf(" S ");}
-                    else printf("   ");
-                }
+                // --- MODE DEBUG : TOUT EST VISIBLE (Le '?' a été retiré) ---
+                Type_case t = tab->tableau[i][j].type;
+                couleur("31"); //Rouge
+                if (t == DRAGON) printf(" D ");
+                else if (t == ORC) printf(" O ");
+                else if (t == NAZGUL) printf(" N ");
+                else if (t == ARAIGNEE) printf(" A ");
+                
+                else if (t == TRESOR){
+                    couleur("33");
+                    printf(" T ");}
+                else if (t == ARME_SPE){
+                    couleur("34"); //Bleu
+                    printf(" W ");}
+                else if (t == PORTAIL){
+                    couleur("35"); //Violet
+                    printf(" P ");}
+                else if (t == TOTEM){
+                    couleur("36");
+                    printf(" M ");}
+                else if (t == DEPART){
+                    couleur("0");
+                    printf(" S ");}
+                else printf("   ");
+                
                 couleur("0");
                 if(j==TAILLE-1 && i==(TAILLE-1)/2) couleur("8");
                 printf("|");
