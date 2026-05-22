@@ -14,7 +14,7 @@ Personnage* choix_arme(Personnage *x){ //Fonction qui demande a lutilisateur ava
     return x;
 }
 
-int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
+int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){ //fonction qui verifie si on peut aller sur la case quon a choisie
     if (ligne_new < 1 || ligne_new > 5) {
         return 0; // Sortie tableau
     }
@@ -27,7 +27,7 @@ int verifcaselibre(Plateau* tab, int colonne_new, int ligne_new){
     return 1; 
 }
 
-int deplacement(Personnage* x, Plateau* tab) {
+int deplacement(Personnage* x, Plateau* tab) { //focniton qui permet de se deplacer en haut,bas,gauche ou droite
     int choixdeplacement;
     int deplacement_valide = 0; 
     int verif;
@@ -119,7 +119,7 @@ void reset_tableau(Personnage* x, Plateau* tab) { //fonction qui cache tout le p
     printf("\n[DEFAITE] Le labyrinthe se referme... %s revient au point de depart !\n", x->nomJoueur);
 }
 
-int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colonne){ 
+int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colonne){ //fonction qui fait laction de la case 
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0;
     int verif;
@@ -219,7 +219,7 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
             }
             vide_buffer();
         } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1 || verif != 2); 
-        Type_case temp_type = tab->tableau[ligne][colonne].type;
+        Type_case temp_type = tab->tableau[ligne][colonne].type; // on ecahnge et le type et le proprio aus cas oou cest une arme spe
         int temp_proprio = tab->tableau[ligne][colonne].proprietaire;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[ligne][colonne].proprietaire = tab->tableau[x->ligne][x->colonne].proprietaire;
@@ -252,7 +252,7 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
     return 0; // Réussit
 }
 
-void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
+void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) { //procedure qui affiche le plateau 
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
     couleur("30"); //Numéros de colonnes en gris
     printf("    0   1   2   3   4   5   6\n");
@@ -285,30 +285,36 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
                 couleur("0");
             } 
             else {
-                // --- MODE DEBUG : TOUT EST VISIBLE (Le '?' a été retiré) ---
-                Type_case t = tab->tableau[i][j].type;
-                couleur("31"); //Rouge
-                if (t == DRAGON) printf(" D ");
-                else if (t == ORC) printf(" O ");
-                else if (t == NAZGUL) printf(" N ");
-                else if (t == ARAIGNEE) printf(" A ");
-                
-                else if (t == TRESOR){
-                    couleur("33");
-                    printf(" T ");}
-                else if (t == ARME_SPE){
-                    couleur("34"); //Bleu
-                    printf(" W ");}
-                else if (t == PORTAIL){
-                    couleur("35"); //Violet
-                    printf(" P ");}
-                else if (t == TOTEM){
-                    couleur("36");
-                    printf(" M ");}
-                else if (t == DEPART){
-                    couleur("0");
-                    printf(" S ");}
-                else printf("   ");
+                // --- LE BROUILLARD DE GUERRE EST DE RETOUR ---
+                if (tab->tableau[i][j].est_decouverte == 0) {
+                    couleur("37"); // Couleur blanche/grise pour les points d'interrogation
+                    printf(" ? ");
+                } 
+                else {
+                    Type_case t = tab->tableau[i][j].type;
+                    couleur("31"); //Rouge
+                    if (t == DRAGON) printf(" D ");
+                    else if (t == ORC) printf(" O ");
+                    else if (t == NAZGUL) printf(" N ");
+                    else if (t == ARAIGNEE) printf(" A ");
+                    
+                    else if (t == TRESOR){
+                        couleur("33"); //Jaune
+                        printf(" T ");}
+                    else if (t == ARME_SPE){
+                        couleur("34"); //Bleu
+                        printf(" W ");}
+                    else if (t == PORTAIL){
+                        couleur("35"); //Violet
+                        printf(" P ");}
+                    else if (t == TOTEM){
+                        couleur("36"); //Cyan
+                        printf(" M ");}
+                    else if (t == DEPART){
+                        couleur("0");
+                        printf(" S ");}
+                    else printf("   ");
+                }
                 
                 couleur("0");
                 if(j==TAILLE-1 && i==(TAILLE-1)/2) couleur("8");
@@ -326,7 +332,8 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) {
     }
 }
 
-void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ 
+
+void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ //fonction qui fait le deroulement du jeu 
     int fin_de_partie = 0;
     int morts_partie[4] = {0, 0, 0, 0};
     while(fin_de_partie == 0){
