@@ -22,8 +22,8 @@
 #define ECRAN_AFFICHAGE_MONSTRE 8 
 #define ECRAN_VISEUR 9 
 #define ECRAN_FIN_PARTIE 10 
-#define ECRAN_REGLES 11 // NOUVEL ECRAN !
-#define MAX_LIGNES 30 
+#define ECRAN_REGLES 11 
+#define MAX_LIGNES 50
 
 // =======================================================================
 // FONCTION UTILITAIRE : AFFICHER UN TEXTE DANS UN BANDEAU NOIR
@@ -217,6 +217,7 @@ int main(int argc, char* argv[]) {
     int curseur_arme = 0; 
     int curseur_fin = 0; 
     int viseur_lig = 3, viseur_col = 3; 
+    int morts_partie[4] = {0, 0, 0, 0};
     
     SDL_Texture* texturePseudo = NULL;
     SDL_Rect rectPseudo = {0, 0, 0, 0};
@@ -365,7 +366,7 @@ int main(int argc, char* argv[]) {
                         monPlateau = initialisation(joueurs, nombreDeJoueurs);
                         depart(joueurs, nombreDeJoueurs); 
                         joueur_en_cours = 0; 
-                        
+                        for(int i = 0; i < 4; i++) morts_partie[i] = 0;
                         // 4. On lance la nouvelle musique avec une montée progressive sur 2 secondes
                         if (musiqueJeu != NULL) Mix_FadeInMusic(musiqueJeu, -1, 2000);
                         
@@ -439,26 +440,32 @@ int main(int argc, char* argv[]) {
                             ecranActuel = ECRAN_VISEUR;
                         } 
                         else {
-                            // --- LIGNE CORRIGÉE : On lance la résolution du combat ! ---
-                            int mort = resolution_case(&joueurs[joueur_en_cours], &monPlateau, 0, 0);
+                        // --- LIGNE CORRIGÉE : On lance la résolution du combat ! ---
+                        int mort = resolution_case(&joueurs[joueur_en_cours], &monPlateau, 0, 0);
 
-                            if (joueurs[joueur_en_cours].aLeTresor == 1 && joueurs[joueur_en_cours].aLarme == 1) {
-                                printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueurs[joueur_en_cours].nomJoueur);
-                                
-                                // 1. MISE A JOUR DU FICHIER TEXTE
-                                mettre_a_jour_stats(joueurs[joueur_en_cours].nomJoueur, 1, 0, 0);
-                                for (int k = 0; k < nombreDeJoueurs; k++) {
-                                    if (k != joueur_en_cours) mettre_a_jour_stats(joueurs[k].nomJoueur, 0, 1, 0);
+                        if (joueurs[joueur_en_cours].aLeTresor == 1 && joueurs[joueur_en_cours].aLarme == 1) {
+                            printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueurs[joueur_en_cours].nomJoueur);
+                            
+                            // ==============================================================
+                            // 1. MISE A JOUR DU FICHIER TEXTE (C'EST ICI QU'IL FAUT CHANGER)
+                            // ==============================================================
+                            mettre_a_jour_stats(joueurs[joueur_en_cours].nomJoueur, 1, 0, morts_partie[joueur_en_cours]);
+                            
+                            for (int k = 0; k < nombreDeJoueurs; k++) {
+                                if (k != joueur_en_cours) {
+                                    mettre_a_jour_stats(joueurs[k].nomJoueur, 0, 1, morts_partie[k]);
                                 }
-                                
-                                // 2. RECHARGEMENT DES TEXTURES DU HALL OF FAME POUR LA SDL
-                                for (int i = 0; i < nbLignesLues; i++) {
-                                    SDL_DestroyTexture(tex_nom[i]);
-                                    SDL_DestroyTexture(tex_part[i]);
-                                    SDL_DestroyTexture(tex_v[i]);
-                                    SDL_DestroyTexture(tex_d[i]);
-                                    SDL_DestroyTexture(tex_m[i]);
-                                }
+                            }
+                            // ==============================================================
+                            
+                            // 2. RECHARGEMENT DES TEXTURES DU HALL OF FAME POUR LA SDL
+                            for (int i = 0; i < nbLignesLues; i++) {
+                                SDL_DestroyTexture(tex_nom[i]);
+                                SDL_DestroyTexture(tex_part[i]);
+                                SDL_DestroyTexture(tex_v[i]);
+                                SDL_DestroyTexture(tex_d[i]);
+                                SDL_DestroyTexture(tex_m[i]);
+                            }
                                 
                                 nbLignesLues = charger_stats(mesStats, MAX_LIGNES);
                                 
@@ -495,6 +502,7 @@ int main(int argc, char* argv[]) {
                                 ecranActuel = ECRAN_FIN_PARTIE; 
                             } else {
                                 if (mort == 1) {
+                                    morts_partie[joueur_en_cours]++;
                                     joueur_en_cours++;
                                     if (joueur_en_cours >= nombreDeJoueurs) joueur_en_cours = 0; 
                                 }
@@ -692,7 +700,6 @@ int main(int argc, char* argv[]) {
         
         if (ecranActuel == ECRAN_ACCUEIL) {
             SDL_RenderCopy(renderer, imageAccueil, NULL, NULL);
-            afficher_bandeau_texte(renderer, police, "Appuyez sur Entree pour commencer", 440);
         }
         else if (ecranActuel == ECRAN_MENU) {
             SDL_RenderCopy(renderer, imageMenu, NULL, NULL);
