@@ -255,10 +255,13 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
 void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) { //procedure qui affiche le plateau 
     printf("\n      --- PLATEAU DE JEU 7x7 ---\n\n");
     couleur("30"); //Numéros de colonnes en gris
-    printf("    0   1   2   3   4   5   6\n");
-    couleur("8");
-    printf("  +---+---+---+---+---+---+---+\n"); // A CACHER
+    printf("    0   1   2   3   4   5   6");
     couleur("0");
+    printf("\t\tJoueur 1 : %s\n", tab_joueurs[0].nomJoueur); //Affiche le pseudo du joueur 1
+    couleur("8");
+    printf("  +---+---+---+---+---+---+---+"); // A CACHER
+    couleur("0");
+    printf("\t\tJoueur 2 : %s\n", tab_joueurs[1].nomJoueur); //Affiche le pseudo du joueur 2
     for (int i = 0; i < TAILLE; i++) {
         couleur("30"); //Numéros de lignes en gris
         printf("%d ", i); //print les colonnes
@@ -287,7 +290,7 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) { 
             else {
                 // --- LE BROUILLARD DE GUERRE EST DE RETOUR ---
                 if (tab->tableau[i][j].est_decouverte == 0) {
-                    couleur("37"); // Couleur blanche/grise pour les points d'interrogation
+                    couleur("30"); // Couleur blanche/grise pour les points d'interrogation
                     printf(" ? ");
                 } 
                 else {
@@ -322,15 +325,27 @@ void afficher_plateau(Plateau* tab, Personnage tab_joueurs[], int nb_joueurs) { 
                 couleur("0");
             }
         }
-        if(i<2 || i>3 ) couleur("8");
+        if(i==0 && nb_joueurs>2){
+            couleur("0");
+            printf("\t\tJoueur 3 : %s", tab_joueurs[2].nomJoueur); //Affiche le pseudo du joueur 3 s'il existe
+
+            }
+        
+        if(i<2 || i>3 ){ couleur("8");}
         printf("\n  ----");//A CACHER
         if(i!=6) couleur("0"); //dernière ligne
         printf("+---+---+---+---+---+");
         if(i<2 || i>3 ) couleur("8");
-        printf("----\n"); //A CACHER
+        printf("----"); //A CACHER
         couleur("0");
+        if(i==0 && nb_joueurs>3){
+            couleur("0");
+            printf("\t\tJoueur 4 : %s", tab_joueurs[3].nomJoueur); //Affiche le pseudo du Joueur 4 s'il existe
+            }
+        printf("\n");
     }
 }
+
 
 
 void deroulement_jeu(Plateau* tab, Personnage* joueur, int nb_joueurs){ //fonction qui fait le deroulement du jeu 
