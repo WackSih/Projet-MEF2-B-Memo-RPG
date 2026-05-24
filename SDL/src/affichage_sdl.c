@@ -25,9 +25,6 @@
 #define ECRAN_REGLES 11 
 #define MAX_LIGNES 50
 
-// =======================================================================
-// FONCTION UTILITAIRE : AFFICHER UN TEXTE DANS UN BANDEAU NOIR
-// =======================================================================
 void afficher_bandeau_texte(SDL_Renderer* renderer, TTF_Font* police, const char* texte, int y_position) {
     SDL_Color couleurBlanche = {255, 255, 255, 255};
     
@@ -46,9 +43,6 @@ void afficher_bandeau_texte(SDL_Renderer* renderer, TTF_Font* police, const char
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
 }
 
-// =======================================================================
-// FONCTION PRINCIPALE (MAIN)
-// =======================================================================
 int main(int argc, char* argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) return 1;
     if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))) return 1;
@@ -343,7 +337,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
                 else if (ecranActuel == ECRAN_REGLES) {
-                    // --- NOUVEAU : ECRAN DES RÈGLES ---
+                    // --- ECRAN DES RÈGLES ---
                     if (event.key.keysym.sym == SDLK_RETURN || event.key.keysym.sym == SDLK_KP_ENTER || event.key.keysym.sym == SDLK_SPACE) {
                         
                         printf("\n--- LA PARTIE COMMENCE ---\n");
@@ -367,7 +361,7 @@ int main(int argc, char* argv[]) {
                         depart(joueurs, nombreDeJoueurs); 
                         joueur_en_cours = 0; 
                         for(int i = 0; i < 4; i++) morts_partie[i] = 0;
-                        // 4. On lance la nouvelle musique avec une montée progressive sur 2 secondes
+                        // On lance la nouvelle musique avec une montée progressive sur 2 secondes
                         if (musiqueJeu != NULL) Mix_FadeInMusic(musiqueJeu, -1, 2000);
                         
                         ecranActuel = ECRAN_JEU; 
@@ -440,15 +434,11 @@ int main(int argc, char* argv[]) {
                             ecranActuel = ECRAN_VISEUR;
                         } 
                         else {
-                        // --- LIGNE CORRIGÉE : On lance la résolution du combat ! ---
+                        // --- On lance la résolution du combat ! ---
                         int mort = resolution_case(&joueurs[joueur_en_cours], &monPlateau, 0, 0);
 
                         if (joueurs[joueur_en_cours].aLeTresor == 1 && joueurs[joueur_en_cours].aLarme == 1) {
                             printf("\n!!! VICTOIRE !!! %s a gagne la partie !\n", joueurs[joueur_en_cours].nomJoueur);
-                            
-                            // ==============================================================
-                            // 1. MISE A JOUR DU FICHIER TEXTE (C'EST ICI QU'IL FAUT CHANGER)
-                            // ==============================================================
                             mettre_a_jour_stats(joueurs[joueur_en_cours].nomJoueur, 1, 0, morts_partie[joueur_en_cours]);
                             
                             for (int k = 0; k < nombreDeJoueurs; k++) {
@@ -456,9 +446,8 @@ int main(int argc, char* argv[]) {
                                     mettre_a_jour_stats(joueurs[k].nomJoueur, 0, 1, morts_partie[k]);
                                 }
                             }
-                            // ==============================================================
                             
-                            // 2. RECHARGEMENT DES TEXTURES DU HALL OF FAME POUR LA SDL
+                            // RECHARGEMENT DES TEXTURES DU HALL OF FAME 
                             for (int i = 0; i < nbLignesLues; i++) {
                                 SDL_DestroyTexture(tex_nom[i]);
                                 SDL_DestroyTexture(tex_part[i]);
@@ -559,7 +548,6 @@ int main(int argc, char* argv[]) {
                     else if (event.key.keysym.sym == SDLK_RETURN || event.key.keysym.sym == SDLK_KP_ENTER) {
                         
                         if (curseur_fin == 0) {
-                            // 1er bouton (Rejouer mêmes persos) : Transition visuelle classique rapide
                             lancerTransition = 1; 
                             Mix_FadeOutMusic(800); 
                             
@@ -571,7 +559,6 @@ int main(int argc, char* argv[]) {
                             ecranSuivant = ECRAN_JEU; 
                         }
                         else {
-                            // 2ème et 3ème boutons : La fameuse transition dramatique !
                             Mix_FadeOutMusic(1000); // On baisse la musique de victoire/jeu
                             
                             // On affiche un écran tout noir
@@ -586,9 +573,8 @@ int main(int argc, char* argv[]) {
                             }
                             SDL_RenderPresent(renderer);
                             
-                            // Le suspense...
-                            SDL_Delay(1000); // Attend la fin du fondu audio
-                            SDL_Delay(2000); // 2 secondes de silence apaisant
+                            SDL_Delay(1000);
+                            SDL_Delay(2000); 
                             
                             // On relance la musique du Menu
                             if (musiqueMenu != NULL) Mix_FadeInMusic(musiqueMenu, -1, 2000);
@@ -636,7 +622,7 @@ int main(int argc, char* argv[]) {
                             }
                             SDL_RenderSetClipRect(renderer, NULL); 
                         }
-                        else if(ecranActuel == ECRAN_REGLES) { // --- NOUVEAU ---
+                        else if(ecranActuel == ECRAN_REGLES) { 
                             SDL_RenderCopy(renderer, imageRegles, NULL, NULL);
                         }
                         else if(ecranActuel == ECRAN_FIN_PARTIE) {
@@ -679,7 +665,7 @@ int main(int argc, char* argv[]) {
                             }
                             SDL_RenderSetClipRect(renderer, NULL); 
                         }
-                        else if(ecranActuel == ECRAN_REGLES) { // --- NOUVEAU ---
+                        else if(ecranActuel == ECRAN_REGLES) { 
                             SDL_RenderCopy(renderer, imageRegles, NULL, NULL);
                         }
                         else if(ecranActuel == ECRAN_FIN_PARTIE) {
@@ -695,7 +681,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // --- 2. AFFICHAGE DES IMAGES (RENDU) ---
+        // --- AFFICHAGE DES IMAGES ---
         SDL_RenderClear(renderer);
         
         if (ecranActuel == ECRAN_ACCUEIL) {
@@ -758,7 +744,7 @@ int main(int argc, char* argv[]) {
             }
             afficher_bandeau_texte(renderer, police, texte_indication, 25);
         }
-        else if (ecranActuel == ECRAN_REGLES) { // --- NOUVEAU ---
+        else if (ecranActuel == ECRAN_REGLES) {
             SDL_RenderCopy(renderer, imageRegles, NULL, NULL);
             afficher_bandeau_texte(renderer, police, "Appuyez sur Entree pour demarrer la partie !", 440);
         }
@@ -907,7 +893,7 @@ int main(int argc, char* argv[]) {
             
         } // <-- FIN DE LA GRANDE SECTION DU PLATEAU
         
-        // --- 3. ACTUALISATION DE L'ÉCRAN ---
+        // --- ACTUALISATION DE L'ÉCRAN ---
         SDL_RenderPresent(renderer);
     }
 
@@ -929,7 +915,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyTexture(imageHallOfFame);
     SDL_DestroyTexture(imagePlateauJeu);
     SDL_DestroyTexture(imageChoixArme); 
-    SDL_DestroyTexture(imageRegles); // NOUVEAU
+    SDL_DestroyTexture(imageRegles);
     
     SDL_DestroyTexture(imgOrc);
     SDL_DestroyTexture(imgDragon);
