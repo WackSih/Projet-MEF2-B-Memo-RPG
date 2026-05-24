@@ -58,14 +58,14 @@ Cette version propose une interface graphique complète et une gestion sonore po
 Si vous utilisez le fichier `Makefile_sdl` dédié à la version graphique :
 
 **Pour compiler :**
-> make -f Makefile_sdl
+> make 
 
 **Pour lancer le jeu :**
 * **Linux :** `./exec_sdl`
 * **Windows :** `.\exec_sdl.exe`
 
 **Pour nettoyer les fichiers objets (`.o`) et l'exécutable :**
-> make -f Makefile_sdl clean
+> make clean
 
 ### Compilation manuelle (Alternative sans Makefile)
 
