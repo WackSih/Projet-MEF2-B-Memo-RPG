@@ -55,7 +55,7 @@ Cette version propose une interface graphique complète et une gestion sonore po
 
 ### Compilation et Exécution via le Makefile
 
-Si vous utilisez le fichier `Makefile_sdl` dédié à la version graphique :
+Si vous utilisez le fichier `Makefile` dédié à la version graphique :
 
 **Pour compiler :**
 > make 
