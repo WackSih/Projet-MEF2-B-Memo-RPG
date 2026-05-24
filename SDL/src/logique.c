@@ -102,7 +102,7 @@ void reset_tableau(Personnage* x, Plateau* tab) {
             }
         }
     }
-    // 2. Positions exactes sous forme de croix 
+    // Positions exactes sous forme de croix 
     if (x->perso == GANDALF) {
         x->ligne = 0; x->colonne = 3;
     }
@@ -122,10 +122,10 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
     Type_case case_actuelle = tab->tableau[x->ligne][x->colonne].type;
     int mort = 0; 
     
-    // 1. Traduction du nom du personnage actuel
+    // Traduction du nom du personnage actuel
     char nom_du_perso[20];
     if (x->perso == GANDALF) {
-        strcpy(nom_du_perso, "Gandalf"); // CORRECTION ICI !
+        strcpy(nom_du_perso, "Gandalf"); 
     }
     else if (x->perso == TAURIEL) {
         strcpy(nom_du_perso, "Tauriel");
@@ -188,7 +188,6 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
             printf("\nGenial ! %s (%s), vous avez trouve votre Arme de quete !\n", x->nomJoueur, nom_du_perso);
             x->aLarme = 1;
         }else{
-            // CORRECTION ICI : On traduit le numéro du vrai proprio en texte !
             char nom_vrai_proprio[20];
             if (vrai_proprio == GANDALF) strcpy(nom_vrai_proprio, "Gandalf");
             else if (vrai_proprio == TAURIEL) strcpy(nom_vrai_proprio, "Tauriel");
@@ -226,7 +225,7 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
         x->ligne = cible_ligne;
         x->colonne = cible_colonne;
         tab->tableau[x->ligne][x->colonne].est_decouverte = 1; 
-        mort = resolution_case(x, tab, 0, 0); // 
+        mort = resolution_case(x, tab, 0, 0); 
         return mort; 
     }
     
