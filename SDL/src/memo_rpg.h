@@ -45,7 +45,7 @@ typedef struct {
     int nmb_mort;
 } StatJoueur;
 
-// Prototypes (Indispensables pour lier les fichiers)
+// Prototypes 
 Plateau initialisation(Personnage tab_joueurs[], int nb_joueurs);
 void depart(Personnage tab_joueurs[], int nb_joueurs);
 void select_perso(Personnage tab_joueurs[], int nb_joueurs);
