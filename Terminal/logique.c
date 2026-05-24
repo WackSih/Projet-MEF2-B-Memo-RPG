@@ -219,7 +219,7 @@ int resolution_case(Personnage* x, Plateau* tab, int cible_ligne, int cible_colo
             }
             vide_buffer();
         } while(ligne < 1 || ligne > 5 || colonne < 1 || colonne > 5 || tab->tableau[ligne][colonne].est_decouverte == 1 || verif != 2); 
-        Type_case temp_type = tab->tableau[ligne][colonne].type; // on ecahnge et le type et le proprio aus cas oou cest une arme spe
+        Type_case temp_type = tab->tableau[ligne][colonne].type; // on echange le type et le proprio aus cas ou cest une arme spe
         int temp_proprio = tab->tableau[ligne][colonne].proprietaire;
         tab->tableau[ligne][colonne].type = tab->tableau[x->ligne][x->colonne].type;
         tab->tableau[ligne][colonne].proprietaire = tab->tableau[x->ligne][x->colonne].proprietaire;
